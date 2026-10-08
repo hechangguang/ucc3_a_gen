@@ -1,0 +1,20 @@
+include vot_config.mk
+include products_rules.mk
+
+WORK_DIR := $(shell pwd)
+
+tdk_root := $(WORK_DIR)/tdk_release
+
+
+IMG_DIR := $(tdk_root)/images/
+
+all:  vision_firmware
+
+
+vision_firmware:
+	@echo $(FIRMWARE_VERSION)
+	@echo VERSION=\"$(FIRMWARE_VERSION)\" > version.txt
+	@python3 calc_crc16.py  $(IMG_DIR)/ts_vision.uimg  $(IMG_DIR)/ts_vision_padded.bin  --output_file_prefix=$(FIRMWARE_NAME_PREFIX) --mode=standard --target_kb=950 --isp_cfg=isp_cfg.bin
+	cp $(IMG_DIR)$(strip $(CLEAN_FIRMWARE_NAME_PREFIX)).bin  /mnt/hgfs/share/
+
+

@@ -1,0 +1,19 @@
+# Kconfig -- lib 层配置文件
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022 Hangzhou JiTai Silicon Co., Ltd. All rights reserved.
+
+menu "Command Configuration"
+
+config SUPPORT_CMDL
+	bool "Support command line for debug or test"
+	default n
+
+if SUPPORT_CMDL
+
+config CMDL_REBOOT
+	bool "reboot"
+	default n
+	
+endif
+
+endmenu

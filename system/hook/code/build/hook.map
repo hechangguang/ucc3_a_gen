@@ -1,0 +1,470 @@
+
+内存配置
+
+名称           来源             长度             属性
+RAM              0x0000000002200000 0x0000000000010000
+*default*        0x0000000000000000 0xffffffffffffffff
+
+链结器命令稿和内存映射
+
+                0x0000000000000000                __DYNAMIC = 0x0
+
+.text           0x0000000002200000     0x1cc4
+ *(.hook_start)
+ .hook_start    0x0000000002200000       0x62 build/src/hook.o
+                0x0000000002200000                bootup_hook
+ *(.text)
+ .text          0x0000000002200062        0x0 build/src/hook.o
+ .text          0x0000000002200062        0x0 build/src/platform/t10x/soc_main.o
+ .text          0x0000000002200062        0x0 build/src/driver//clock/clk_t10x.o
+ .text          0x0000000002200062        0x0 build/src/driver//ddr/prc_v100.o
+ .text          0x0000000002200062        0x0 build/src/driver//efuse/efuse_null.o
+ .text          0x0000000002200062        0x0 build/src/driver//uart/uart_v100.o
+ .text          0x0000000002200062        0x0 build/src/cmd/utils/reboot.o
+ .text          0x0000000002200062        0x0 build/src/app//snand_flash.o
+ .text          0x0000000002200062        0x0 build/src/app//hook_bootup.o
+ .text          0x0000000002200062        0x0 build/src/app//boot_param.o
+ *(.text.startup)
+ *(.text.*)
+ .text.soc_get_ddr_bank_regbase
+                0x0000000002200062       0x18 build/src/platform/t10x/soc_main.o
+                0x0000000002200062                soc_get_ddr_bank_regbase
+ .text.soc_get_osc_clk
+                0x000000000220007a        0xa build/src/platform/t10x/soc_main.o
+                0x000000000220007a                soc_get_osc_clk
+ .text.soc_get_uart_regbase
+                0x0000000002200084       0x18 build/src/platform/t10x/soc_main.o
+                0x0000000002200084                soc_get_uart_regbase
+ .text.soc_uart_set_mux
+                0x000000000220009c        0x2 build/src/platform/t10x/soc_main.o
+                0x000000000220009c                soc_uart_set_mux
+ .text.soc_init
+                0x000000000220009e       0x36 build/src/platform/t10x/soc_main.o
+                0x000000000220009e                soc_init
+ *fill*         0x00000000022000d4        0x0 
+ .text.hook_clkm_init
+                0x00000000022000d4      0x1a4 build/src/driver//clock/clk_t10x.o
+                0x00000000022000d4                hook_clkm_init
+ .text.psram_x8_32Mb_T200_init.constprop.0
+                0x0000000002200278      0x3b6 build/src/driver//ddr/prc_v100.o
+ *fill*         0x000000000220062e        0x2 
+ .text.psram_x16_128Mb_T250_init.constprop.0
+                0x0000000002200630      0x2ca build/src/driver//ddr/prc_v100.o
+ *fill*         0x00000000022008fa        0x2 
+ .text.psram_x16_256Mb_T250_init
+                0x00000000022008fc      0x2a2 build/src/driver//ddr/prc_v100.o
+ .text.setup_seq
+                0x0000000002200b9e        0xc build/src/driver//ddr/prc_v100.o
+                0x0000000002200b9e                setup_seq
+ .text.hook_ddr_init
+                0x0000000002200baa       0x96 build/src/driver//ddr/prc_v100.o
+                0x0000000002200baa                hook_ddr_init
+ .text.efuse_hal_write_bit
+                0x0000000002200c40        0x4 build/src/driver//efuse/efuse_null.o
+                0x0000000002200c40                efuse_hal_write_bit
+ .text.efuse_hal_writel
+                0x0000000002200c44        0x4 build/src/driver//efuse/efuse_null.o
+                0x0000000002200c44                efuse_hal_writel
+ .text.efuse_read_pubkey
+                0x0000000002200c48        0x2 build/src/driver//efuse/efuse_null.o
+                0x0000000002200c48                efuse_read_pubkey
+ .text.efuse_init_pubkey
+                0x0000000002200c4a        0x2 build/src/driver//efuse/efuse_null.o
+                0x0000000002200c4a                efuse_init_pubkey
+ .text.efuse_reinit
+                0x0000000002200c4c        0x2 build/src/driver//efuse/efuse_null.o
+                0x0000000002200c4c                efuse_reinit
+ .text.hook_uart_read
+                0x0000000002200c4e       0x7e build/src/driver//uart/uart_v100.o
+                0x0000000002200c4e                hook_uart_read
+ .text.hook_uart_write
+                0x0000000002200ccc       0x7e build/src/driver//uart/uart_v100.o
+                0x0000000002200ccc                hook_uart_write
+ .text.hook_uart_putc
+                0x0000000002200d4a       0x2c build/src/driver//uart/uart_v100.o
+                0x0000000002200d4a                hook_uart_putc
+ *fill*         0x0000000002200d76        0x2 
+ .text.hook_uart_puts
+                0x0000000002200d78       0x7e build/src/driver//uart/uart_v100.o
+                0x0000000002200d78                hook_uart_puts
+ .text.hook_uart_init
+                0x0000000002200df6       0x74 build/src/driver//uart/uart_v100.o
+                0x0000000002200df6                hook_uart_init
+ *fill*         0x0000000002200e6a        0x2 
+ .text.cmdl_reboot
+                0x0000000002200e6c       0x5e build/src/cmd/utils/reboot.o
+ .text.hook_snand_get_status
+                0x0000000002200eca       0xf6 build/src/app//snand_flash.o
+                0x0000000002200eca                hook_snand_get_status
+ .text.hook_snand_mark_bad
+                0x0000000002200fc0      0x102 build/src/app//snand_flash.o
+                0x0000000002200fc0                hook_snand_mark_bad
+ .text.hook_snand_chk_bad
+                0x00000000022010c2       0x74 build/src/app//snand_flash.o
+                0x00000000022010c2                hook_snand_chk_bad
+ .text.hook_snand_enable_bp
+                0x0000000002201136       0x26 build/src/app//snand_flash.o
+                0x0000000002201136                hook_snand_enable_bp
+ .text.hook_snand_disable_bp
+                0x000000000220115c       0x22 build/src/app//snand_flash.o
+                0x000000000220115c                hook_snand_disable_bp
+ .text.hook_erase_blk
+                0x000000000220117e       0xee build/src/app//snand_flash.o
+                0x000000000220117e                hook_erase_blk
+ .text.hook_snand_set_ecc_thr
+                0x000000000220126c       0x1a build/src/app//snand_flash.o
+                0x000000000220126c                hook_snand_set_ecc_thr
+ .text.hook_snand_get_ecc_thr
+                0x0000000002201286        0xa build/src/app//snand_flash.o
+                0x0000000002201286                hook_snand_get_ecc_thr
+ .text.snand_read_page
+                0x0000000002201290       0xb2 build/src/app//snand_flash.o
+                0x0000000002201290                snand_read_page
+ *fill*         0x0000000002201342        0x2 
+ .text.snand_rw_blk
+                0x0000000002201344      0x256 build/src/app//snand_flash.o
+ .text.hook_snand_read_blk
+                0x000000000220159a        0x4 build/src/app//snand_flash.o
+                0x000000000220159a                hook_snand_read_blk
+ .text.hook_snand_write_blk
+                0x000000000220159e        0x4 build/src/app//snand_flash.o
+                0x000000000220159e                hook_snand_write_blk
+ .text.hook_snand_write
+                0x00000000022015a2       0xee build/src/app//snand_flash.o
+                0x00000000022015a2                hook_snand_write
+ .text.hook_snand_read
+                0x0000000002201690       0xfe build/src/app//snand_flash.o
+                0x0000000002201690                hook_snand_read
+ .text.hook_snand_get_ecc_flg
+                0x000000000220178e        0xa build/src/app//snand_flash.o
+                0x000000000220178e                hook_snand_get_ecc_flg
+ .text.hook_snand_get_risk_addr
+                0x0000000002201798        0xa build/src/app//snand_flash.o
+                0x0000000002201798                hook_snand_get_risk_addr
+ .text.hook_boot_app
+                0x00000000022017a2      0x156 build/src/app//hook_bootup.o
+                0x00000000022017a2                hook_boot_app
+ .text.bt_param_write
+                0x00000000022018f8       0xba build/src/app//boot_param.o
+ .text.get_bt_param
+                0x00000000022019b2      0x178 build/src/app//boot_param.o
+                0x00000000022019b2                get_bt_param
+ .text.set_bt_param
+                0x0000000002201b2a       0x52 build/src/app//boot_param.o
+                0x0000000002201b2a                set_bt_param
+                0x0000000002201b7c                . = ALIGN (0x4)
+ *fill*         0x0000000002201b7c        0x0 
+ *(.eh_frame)
+                0x0000000002201b7c                . = ALIGN (0x4)
+ *(.gcc_except_table)
+                0x0000000002201b7c                . = ALIGN (0x4)
+                0x0000000002201b7c                __cmdl_start = .
+ *(.cmdl_sect)
+ .cmdl_sect     0x0000000002201b7c        0x8 build/src/cmd/utils/reboot.o
+                0x0000000002201b84                __cmdl_end = .
+                0x0000000002201b84                . = ALIGN (0x4)
+ *(.lit)
+ *(.srodata)
+ *(.srodata.*)
+ *(.rela.*)
+ .rela.hook_start
+                0x0000000002201b84        0x0 build/src/hook.o
+ .rela.text.hook_boot_app
+                0x0000000002201b84        0x0 build/src/hook.o
+ *(.rodata)
+ *(.rodata.*)
+ .rodata.hook_clkm_init.str1.4
+                0x0000000002201b84       0x22 build/src/driver//clock/clk_t10x.o
+ *fill*         0x0000000002201ba6        0x2 
+ .rodata.psram_x8_32Mb_T200_init.constprop.0.str1.4
+                0x0000000002201ba8       0x16 build/src/driver//ddr/prc_v100.o
+ *fill*         0x0000000002201bbe        0x2 
+ .rodata.hook_ddr_init.str1.4
+                0x0000000002201bc0        0xf build/src/driver//ddr/prc_v100.o
+ *fill*         0x0000000002201bcf        0x1 
+ .rodata.str1.4
+                0x0000000002201bd0        0x7 build/src/cmd/utils/reboot.o
+ *fill*         0x0000000002201bd7        0x1 
+ .rodata.snand_rw_blk.str1.4
+                0x0000000002201bd8       0x38 build/src/app//snand_flash.o
+ .rodata.hook_boot_app.str1.4
+                0x0000000002201c10       0x39 build/src/app//hook_bootup.o
+ *fill*         0x0000000002201c49        0x3 
+ .rodata.__FUNCTION__.0
+                0x0000000002201c4c        0xe build/src/app//hook_bootup.o
+ *fill*         0x0000000002201c5a        0x2 
+ .rodata.get_bt_param.str1.4
+                0x0000000002201c5c       0x4f build/src/app//boot_param.o
+ *fill*         0x0000000002201cab        0x1 
+ .rodata.set_bt_param.str1.4
+                0x0000000002201cac       0x16 build/src/app//boot_param.o
+                0x0000000002201cc4                . = ALIGN (0x4)
+ *fill*         0x0000000002201cc2        0x2 
+                0x0000000002201cc4                _hook_etext = .
+                0x0000000002201cc4                __hook_text_end = .
+
+.data           0x0000000002201cc4       0x28
+                0x0000000002201cc4                . = ALIGN (0x4)
+                0x0000000002201cc4                _hook_sdata = .
+ *(.shdata)
+ *(.data)
+ .data          0x0000000002201cc4        0x0 build/src/hook.o
+ .data          0x0000000002201cc4        0x0 build/src/platform/t10x/soc_main.o
+ .data          0x0000000002201cc4        0x0 build/src/driver//clock/clk_t10x.o
+ .data          0x0000000002201cc4        0x0 build/src/driver//ddr/prc_v100.o
+ .data          0x0000000002201cc4        0x0 build/src/driver//efuse/efuse_null.o
+ .data          0x0000000002201cc4        0x0 build/src/driver//uart/uart_v100.o
+ .data          0x0000000002201cc4        0x0 build/src/cmd/utils/reboot.o
+ .data          0x0000000002201cc4        0x0 build/src/app//snand_flash.o
+ .data          0x0000000002201cc4        0x0 build/src/app//hook_bootup.o
+ .data          0x0000000002201cc4        0x0 build/src/app//boot_param.o
+ *(.data.*)
+ .data.gau32_regbase
+                0x0000000002201cc4        0x8 build/src/platform/t10x/soc_main.o
+                0x0000000002201cc4                gau32_regbase
+ .data.gau32_uart_regs
+                0x0000000002201ccc       0x14 build/src/platform/t10x/soc_main.o
+                0x0000000002201ccc                gau32_uart_regs
+ .data.sst_ctx  0x0000000002201ce0        0xc build/src/app//snand_flash.o
+ *(.gcc_exc)
+ *(.sdata)
+ *(.sdata.*)
+                0x0000000002201cec                . = ALIGN (0x4)
+                0x0000000002201cec                _hook_edata = .
+
+.bss            0x0000000002201cec       0x68
+                0x0000000002201cec                __hook_bss_start = .
+ *(.shbss)
+ *(.sbss)
+ *(.bss)
+ .bss           0x0000000002201cec        0x0 build/src/hook.o
+ .bss           0x0000000002201cec        0x0 build/src/platform/t10x/soc_main.o
+ .bss           0x0000000002201cec        0x0 build/src/driver//clock/clk_t10x.o
+ .bss           0x0000000002201cec        0x0 build/src/driver//ddr/prc_v100.o
+ .bss           0x0000000002201cec        0x0 build/src/driver//efuse/efuse_null.o
+ .bss           0x0000000002201cec        0x0 build/src/driver//uart/uart_v100.o
+ .bss           0x0000000002201cec        0x0 build/src/cmd/utils/reboot.o
+ .bss           0x0000000002201cec        0x0 build/src/app//snand_flash.o
+ .bss           0x0000000002201cec        0x0 build/src/app//hook_bootup.o
+ .bss           0x0000000002201cec        0x0 build/src/app//boot_param.o
+ *(.bss.*)
+ .bss.sst_bt_ctx
+                0x0000000002201cec       0x68 build/src/app//hook_bootup.o
+ *(COMMON)
+                0x0000000002201d58                _hook_end = ALIGN (0x8)
+                0x0000000002201d58                __hook_end = _hook_end
+段 .text 的地址设置为 0x2200000
+LOAD build/src/hook.o
+LOAD build/src/platform/t10x/soc_main.o
+LOAD build/src/driver//clock/clk_t10x.o
+LOAD build/src/driver//ddr/prc_v100.o
+LOAD build/src/driver//efuse/efuse_null.o
+LOAD build/src/driver//uart/uart_v100.o
+LOAD build/src/cmd/utils/reboot.o
+LOAD build/src/app//snand_flash.o
+LOAD build/src/app//hook_bootup.o
+LOAD build/src/app//boot_param.o
+START GROUP
+LOAD /opt/toolchain/bin/../lib/gcc/riscv64-unknown-elf/10.4.0/rv32imac/ilp32/libgcc.a
+END GROUP
+LOAD src/platform/t10x/platform.sym
+                0x0000000000000000                __DYNAMIC = 0x0
+                0x0000000000000000                __bootup_start = 0x0
+                0x0000000000000010                __fingerprint = 0x10
+                0x0000000000000020                _exec = 0x20
+                0x0000000000000030                _chk_host = 0x30
+                0x000000000000004e                _load_data = 0x4e
+                0x000000000000006c                __load_data_loop = 0x6c
+                0x000000000000007c                _clear_bss = 0x7c
+                0x0000000000000090                __clear_bss_loop = 0x90
+                0x000000000000009a                _jmp_main = 0x9a
+                0x00000000000000a0                raise = 0xa0
+                0x00000000000000a2                boot_loop = 0xa2
+                0x0000000000000118                bootup = 0x118
+                0x0000000000000156                board_lib_mux_serial = 0x156
+                0x0000000000000158                board_lib_mux_ssbus = 0x158
+                0x000000000000015a                board_lib_init = 0x15a
+                0x000000000000017c                cache_drv_invalid_all = 0x17c
+                0x0000000000000182                cache_drv_flush = 0x182
+                0x0000000000000184                cache_drv_init = 0x184
+                0x000000000000019a                clk_drv_set = 0x19a
+                0x00000000000001b0                clk_dev_get = 0x1b0
+                0x00000000000001c8                clk_drv_init = 0x1c8
+                0x00000000000001de                efuse_drv_get_key_hash = 0x1de
+                0x00000000000001e2                efuse_drv_enable_ssw = 0x1e2
+                0x00000000000001e4                efuse_drv_init = 0x1e4
+                0x00000000000001e8                serial_drv_set_mode = 0x1e8
+                0x00000000000001ec                serial_drv_write = 0x1ec
+                0x0000000000000252                serial_drv_read = 0x252
+                0x00000000000002be                serial_drv_init = 0x2be
+                0x0000000000000302                serial_get_baudrate_div = 0x302
+                0x000000000000032c                serial_set_baudrate_div = 0x32c
+                0x0000000000000350                serial_set_baudrate = 0x350
+                0x0000000000000394                serial_wait_tx_empty = 0x394
+                0x00000000000003ac                serial_put_char = 0x3ac
+                0x00000000000003c6                serial_put_str = 0x3c6
+                0x00000000000003ee                serial_check_data_ready = 0x3ee
+                0x00000000000003f8                serial_get_char = 0x3f8
+                0x0000000000000408                tdl_sfc_config = 0x408
+                0x000000000000046c                tdl_sfc_xfer_multi = 0x46c
+                0x00000000000004f0                tdl_sfc_xfer_stand = 0x4f0
+                0x000000000000056a                tdl_sfc_write_standard = 0x56a
+                0x00000000000005f2                tdl_sfc_get_attr = 0x5f2
+                0x0000000000000604                tdl_sfc_set_attr = 0x604
+                0x000000000000062e                sfc_drv_init = 0x62e
+                0x0000000000000656                timer_enable = 0x656
+                0x0000000000000664                timer_disable = 0x664
+                0x000000000000066e                timer_get_now = 0x66e
+                0x0000000000000676                timer_get_interval = 0x676
+                0x000000000000068c                wdt_start = 0x68c
+                0x00000000000006b2                wdt_stop = 0x6b2
+                0x00000000000006c8                wdt_knock = 0x6c8
+                0x00000000000006e4                wdt_drv_init = 0x6e4
+                0x0000000000000708                ssbus_drv_init = 0x708
+                0x0000000000000716                ssbus_drv_read = 0x716
+                0x00000000000007a0                ssbus_drv_set_mode = 0x7a0
+                0x00000000000007da                ssbus_drv_write = 0x7da
+                0x00000000000008c0                loader_try_load.constprop.0 = 0x8c0
+                0x00000000000009d6                loader_init = 0x9d6
+                0x0000000000000a12                loader_scan = 0xa12
+                0x0000000000000c60                loader_exec_hook = 0xc60
+                0x0000000000000c78                loader_get_handle = 0xc78
+                0x0000000000000c82                loader_verify_img = 0xc82
+                0x0000000000000cd6                loader_read = 0xcd6
+                0x0000000000000d1c                loader_try_hook = 0xd1c
+                0x0000000000000d48                loader_try_next = 0xd48
+                0x0000000000000e70                sfc_read_reg = 0xe70
+                0x0000000000000ea6                sfc_write_reg = 0xea6
+                0x0000000000000ed0                lib_sfc_write_sr = 0xed0
+                0x0000000000000f1a                lib_sfc_read_sr = 0xf1a
+                0x0000000000000f62                lib_sfc_read_id = 0xf62
+                0x0000000000000fb2                lib_sfc_chk_flash_busy = 0xfb2
+                0x0000000000001032                lib_sfc_scan = 0x1032
+                0x0000000000001100                lib_sfc_write_en = 0x1100
+                0x0000000000001126                lib_sfc_erase = 0x1126
+                0x00000000000011b4                sfc_nor_next_cfg = 0x11b4
+                0x0000000000001204                sfc_nor_next_addr = 0x1204
+                0x0000000000001222                sfc_nor_init = 0x1222
+                0x000000000000123c                lib_sfc_nor_read = 0x123c
+                0x000000000000135e                lib_sfc_nor_cfg_info = 0x135e
+                0x000000000000138a                lib_sfc_nor_set_info = 0x138a
+                0x00000000000013ba                lib_sfc_nor_erase_block = 0x13ba
+                0x0000000000001494                lib_sfc_nor_write = 0x1494
+                0x000000000000157c                sfc_nand_next_cfg = 0x157c
+                0x00000000000015be                sfc_nand_next_addr = 0x15be
+                0x00000000000015d6                sfc_nand_init = 0x15d6
+                0x00000000000015f0                sfc_nand_read_page.part.0 = 0x15f0
+                0x00000000000016d0                sfc_nand_chk_blk = 0x16d0
+                0x00000000000017c8                lib_sfc_nand_read = 0x17c8
+                0x0000000000001940                lib_sfc_nand_cfg_info = 0x1940
+                0x000000000000196a                lib_sfc_nand_set_info = 0x196a
+                0x000000000000199a                lib_sfc_nand_erase_block = 0x199a
+                0x00000000000019fe                lib_sfc_nand_write = 0x19fe
+                0x0000000000001afc                dly_lib_init_ctx = 0x1afc
+                0x0000000000001b20                dly_lib_timeout = 0x1b20
+                0x0000000000001b46                dly_lib_delay_us = 0x1b46
+                0x0000000000001b80                ts_strcpy = 0x1b80
+                0x0000000000001b92                ts_strcmp = 0x1b92
+                0x0000000000001bb4                ts_strlen = 0x1bb4
+                0x0000000000001bcc                ts_memcpy_sum = 0x1bcc
+                0x0000000000001be8                ts_memcpy = 0x1be8
+                0x0000000000001bfc                ts_memcmp = 0x1bfc
+                0x0000000000001c30                ts_strtoul = 0x1c30
+                0x0000000000001cf4                send_packet = 0x1cf4
+                0x0000000000001da2                hbp_lib_setdev = 0x1da2
+                0x0000000000001dac                hbp_lib_exec = 0x1dac
+                0x00000000000023d2                hbp_lib_sayup = 0x23d2
+                0x000000000000241c                hbp_lib_chk_ack = 0x241c
+                0x00000000000024de                hbp_lib_init = 0x24de
+                0x00000000000024e0                putc_normal = 0x24e0
+                0x000000000000250c                _vprintf = 0x250c
+                0x000000000000282a                printf = 0x282a
+                0x0000000000002880                log_set_putc = 0x2880
+                0x000000000000288a                log_set_bypass = 0x288a
+                0x0000000000002894                ts_log_set_level = 0x2894
+                0x000000000000289e                ts_log = 0x289e
+                0x00000000000028ea                ts_log_err = 0x28ea
+                0x0000000000002900                cancel_lib_by_user = 0x2900
+                0x000000000000296c                cancel_lib_by_key = 0x296c
+                0x00000000000029e8                verify_lib_calc_crc32 = 0x29e8
+                0x0000000000002a1a                verify_lib_check_crc32 = 0x2a1a
+                0x0000000000002a20                cmdl_set_extra_list = 0x2a20
+                0x0000000000002a2e                cmdl_loop_process = 0x2a2e
+                0x0000000000002eb8                cmdl_boot = 0x2eb8
+                0x0000000000002ebc                cmdl_hbp = 0x2ebc
+                0x0000000000002f38                cmdl_mem = 0x2f38
+                0x0000000000003088                cmdl_perf = 0x3088
+                0x000000000000316e                cmdl_fnor = 0x316e
+                0x00000000000032f4                cmdl_fnand = 0x32f4
+                0x000000000000346e                cmdl_recfg = 0x346e
+                0x00000000000034b0                gst_hbp_serial = 0x34b0
+                0x00000000000034c0                gst_hbp_ssbus = 0x34c0
+                0x00000000000035f0                sau32_crc32_table = 0x35f0
+                0x0000000000003a44                sast_cmds = 0x3a44
+                0x0000000000004008                __text_end = 0x4008
+                0x0000000000004008                _etext = 0x4008
+                0x000000000223e000                _sdata = 0x223e000
+                0x000000000223e000                sast_sfc_nors = 0x223e000
+                0x000000000223e028                st_load_sfc_nor = 0x223e028
+                0x000000000223e048                sast_sfc_nands = 0x223e048
+                0x000000000223e068                st_load_sfc_nand = 0x223e068
+                0x000000000223e088                sac_erase_seq = 0x223e088
+                0x000000000223e08c                sac_tab_seq = 0x223e08c
+                0x000000000223e098                __bss_start = 0x223e098
+                0x000000000223e098                _edata = 0x223e098
+                0x000000000223e098                sau32_clks = 0x223e098
+                0x000000000223e0a0                ss32_serial_inited = 0x223e0a0
+                0x000000000223e0a4                su32_clk_div = 0x223e0a4
+                0x000000000223e0a8                su32_rx_dly = 0x223e0a8
+                0x000000000223e0ac                sst_loader = 0x223e0ac
+                0x000000000223e0dc                sst_img_ih = 0x223e0dc
+                0x000000000223e11c                sapst_loaders = 0x223e11c
+                0x000000000223e134                su32_cur_index = 0x223e134
+                0x000000000223e138                spst_cur_info = 0x223e138
+                0x000000000223e13c                spst_snand_info = 0x223e13c
+                0x000000000223e140                su32_snand_index = 0x223e140
+                0x000000000223e144                spst_hbp_ops = 0x223e144
+                0x000000000223e148                sau32_packet_buf = 0x223e148
+                0x000000000223e958                printf_ctx = 0x223e958
+                0x000000000223e970                spst_cmd_list = 0x223e970
+                0x000000000223e974                su32_cmd_cnt = 0x223e974
+                0x000000000223e978                sau08_cmdl_buf = 0x223e978
+                0x000000000223e9b8                __end = 0x223e9b8
+                0x000000000223e9b8                _end = 0x223e9b8
+OUTPUT(build/hook.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x45
+ .comment       0x0000000000000000       0x45 build/src/hook.o
+                                         0x46 (松开之前的大小)
+ .comment       0x0000000000000045       0x46 build/src/platform/t10x/soc_main.o
+ .comment       0x0000000000000045       0x46 build/src/driver//clock/clk_t10x.o
+ .comment       0x0000000000000045       0x46 build/src/driver//ddr/prc_v100.o
+ .comment       0x0000000000000045       0x46 build/src/driver//efuse/efuse_null.o
+ .comment       0x0000000000000045       0x46 build/src/driver//uart/uart_v100.o
+ .comment       0x0000000000000045       0x46 build/src/cmd/utils/reboot.o
+ .comment       0x0000000000000045       0x46 build/src/app//snand_flash.o
+ .comment       0x0000000000000045       0x46 build/src/app//hook_bootup.o
+ .comment       0x0000000000000045       0x46 build/src/app//boot_param.o
+
+.riscv.attributes
+                0x0000000000000000       0x3a
+ .riscv.attributes
+                0x0000000000000000       0x36 build/src/hook.o
+ .riscv.attributes
+                0x0000000000000036       0x3a build/src/platform/t10x/soc_main.o
+ .riscv.attributes
+                0x0000000000000070       0x36 build/src/driver//clock/clk_t10x.o
+ .riscv.attributes
+                0x00000000000000a6       0x36 build/src/driver//ddr/prc_v100.o
+ .riscv.attributes
+                0x00000000000000dc       0x36 build/src/driver//efuse/efuse_null.o
+ .riscv.attributes
+                0x0000000000000112       0x36 build/src/driver//uart/uart_v100.o
+ .riscv.attributes
+                0x0000000000000148       0x36 build/src/cmd/utils/reboot.o
+ .riscv.attributes
+                0x000000000000017e       0x36 build/src/app//snand_flash.o
+ .riscv.attributes
+                0x00000000000001b4       0x36 build/src/app//hook_bootup.o
+ .riscv.attributes
+                0x00000000000001ea       0x36 build/src/app//boot_param.o

@@ -1,0 +1,131 @@
+# 
+# Makefile -- vision 顶层 Makefile, 通过调用 tsp 进行编译
+# 
+
+TSP_ROOT := $(os_root)
+TSP_MAKEFILE := $(os_root)/Makefile
+
+EXTRA_CFLAG +=
+
+ifeq ($(VOT_STRIP_MODE),y)
+VOT_STRIP_BIN := y
+endif
+
+# 如果不配置此参数，将使用默认 0x40000 这个地址打包
+# 参数确定保存在 flash 的地址
+CONFIG_FIX_UIMG_ADDR = 0x80000
+
+# 如果不配置此参数，将使用默认 0x22000000 这个地址打包
+# 参数确定读取到内存的地址
+# N 系列 : 0x20000000
+# A 系列 : 0x22000000
+CONFIG_FIX_ROM_BASE_ADDR = 0x20000000
+
+# 使用默认脚本，如果不配置此参数，将使用默认大小 0x80000
+# 此参数为配置程序最大使用空间
+
+CONFIG_FIX_ROM_SIZE = 0x100000
+ 
+ifeq ($(lvgl),y)
+CONFIG_FIX_ROM_SIZE = 0x100000
+endif
+
+# 指定链接脚本
+# TARGET_LDS := $(os_root)/release/tdk_nx.lds
+
+WHOLE_LIBS +=
+
+# ROOT
+
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_ualg_v100.a
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_base_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_clkm_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_viu_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_vpo_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_osd_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_isp_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_aisp_v100.ko
+
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_uart_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_gpio_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_sfc_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_spi_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_i2c_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_pwm_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_timer_v100.ko
+GROUP_LIBS += $(ROOT_KO_DIR)/ts_dmac_v100.ko
+
+#GROUP_LIBS += $(ROOT_LIB_DIR)/ts_otdk.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_tdk_v100.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/libispfw.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_usb_v100.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_upl_v100.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_lvgl_v100.a
+
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_snr_v100.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_scpu_v100.a
+GROUP_LIBS += $(ROOT_LIB_DIR)/ts_ualg_v100.a
+
+# Local
+
+#GROUP_LIBS += $(KO_DIR)/ts_base_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_clkm_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_viu_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_vpo_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_osd_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_isp_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_aisp_v100.ko
+
+#GROUP_LIBS += $(KO_DIR)/ts_uart_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_gpio_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_sfc_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_spi_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_i2c_v100.ko
+#GROUP_LIBS += $(KO_DIR)/ts_pwm_v100.ko
+
+#使用用户自定修改后的
+GROUP_LIBS += $(LIB_DIR)/ts_otdk.a
+#GROUP_LIBS += $(LIB_DIR)/ts_tdk_v100.a
+#GROUP_LIBS += $(LIB_DIR)/libispfw.a
+#GROUP_LIBS += $(LIB_DIR)/ts_usb_v100.a
+#GROUP_LIBS += $(LIB_DIR)/ts_upl_v100.a
+#GROUP_LIBS += $(LIB_DIR)/ts_snr_v100.a
+
+ifeq ($(snr),planck640c)
+WHOLE_LIBS += $(LIB_DIR)/T10ISP_20251020184416_planck640c.bin.a
+endif
+ifeq ($(aisp),y)
+WHOLE_LIBS += $(LIB_DIR)/fn_asip_sim_010_cfg.a
+endif
+ifeq ($(sr),y)
+ifeq ($(srm),c4)
+WHOLE_LIBS += $(LIB_DIR)/fn_sr_v2_c4_y12_n0_ps0_j60_cfg.a
+else ifeq ($(srm),c8)
+WHOLE_LIBS += $(LIB_DIR)/fn_sr_v2_c8_y12_n0_cfg.a
+
+#WHOLE_LIBS += $(LIB_DIR)/fn_sr_c8_400_cfg.a
+
+else ifeq ($(srm),b)
+WHOLE_LIBS += $(LIB_DIR)/fn_sr_b_cfg.a
+else ifeq ($(srm),lite)
+WHOLE_LIBS += $(LIB_DIR)/fn_sr_sim_lite_v002_160_144_cfg.a
+else ifeq ($(srm),lite2)
+WHOLE_LIBS += $(LIB_DIR)/fn_sr_litev2_tr02_cfg.a
+else
+WHOLE_LIBS += $(LIB_DIR)/fn_sr_cfg.a
+endif
+endif
+
+
+
+# for bare metal
+ifeq ($(extbp),y)
+WHOLE_LIBS += $(ROOT_LIB_DIR)/ts_bm_scpu_app.a
+endif
+
+ifeq ($(op),y)
+WHOLE_LIBS += $(ROOT_LIB_DIR)/ts_op_scpu_app.a
+endif
+
+build_rtos:
+	@ make -C $(TSP_ROOT) -f Makefile_app CALL_DIR=$(MOD_DIR) app V=1

@@ -1,0 +1,87 @@
+build/src/hook.o: src/hook.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/ts_string.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/scpu.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/snand_flash.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/boot_param.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/hook_bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/hbproto.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/lib/log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup_api.h \
+   $(wildcard /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/config/support/cmdl.h)
+build/src/platform/t10x/soc_main.o: src/platform/t10x/soc_main.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h
+build/src/driver//clock/clk_t10x.o: src/driver//clock/clk_t10x.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/lib/log.h \
+   $(wildcard /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/config/clk/apb.h)
+build/src/driver//ddr/prc_v100.o: src/driver//ddr/prc_v100.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h
+build/src/driver//efuse/efuse_null.o: src/driver//efuse/efuse_null.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h
+build/src/driver//uart/uart_v100.o: src/driver//uart/uart_v100.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup_api.h
+build/src/cmd/utils/reboot.o: src/cmd/utils/reboot.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/ts_string.h
+build/src/app//snand_flash.o: src/app//snand_flash.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/lib/log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/spi_flash.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup_sign_api.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/snand_flash.h
+build/src/app//hook_bootup.o: src/app//hook_bootup.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/boot_param.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/ts_string.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/snand_flash.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup_sign_api.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/hook_bootup.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/io.h
+build/src/app//boot_param.o: src/app//boot_param.c \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/config.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_type.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_errno.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include/base/ts_log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/lib/log.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/snand_flash.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/spi_flash.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/ts_string.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/bootup_api.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/crc.h \
+   /mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/system/hook/code/include/app/boot_param.h

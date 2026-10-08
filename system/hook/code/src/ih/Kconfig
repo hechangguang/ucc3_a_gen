@@ -1,0 +1,149 @@
+# Kconfig -- bootup 打包配置
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022-2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+#
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+
+
+menu "Image Header Configuration"
+
+config IH_MAGIC
+	hex "Magic"
+	default 0x15735423
+
+config IH_LOAD
+	hex "Data load address"
+	default 0x00
+
+config IH_EP
+	hex "Entry point address"
+	default 0x00100000
+
+config IH_IMG_LOAD_ADDR
+	hex "Second boot image load address"
+	default 0x00010000
+
+config IH_IMG_EP_ADDR
+	hex "Second boot image entry point address(0 auto)"
+	default 0
+
+config IH_IMG_SIZE
+	hex "Second boot image size(0 auto)"
+	default 0
+
+config IH_BK_OFFSET
+	hex "Image header backup offset"
+	default 0
+
+config IH_BK_COUNT
+	int "Image header backup count"
+	default 0
+
+config IH_IMAGE_BK_OFFSET
+	hex "Second image backup offset"
+	default 0
+
+config IH_IMAGE_BK_COUNT
+	int "Second image backup count"
+	default 1
+
+config IH_IGNORE_VERIFY
+	bool "Ignore verify"
+	default n
+
+config IH_SIGN_EN
+	bool "Set sign enable(for demo)"
+	default n
+
+
+choice
+	prompt "Select verify type"
+	default IH_VERIFY_CRC32
+
+config IH_VERIFY_SUM32
+	bool "Sum32"
+
+config IH_VERIFY_SUM8
+	bool "Sum8"
+
+config IH_VERIFY_CRC32
+	bool "Crc32"
+
+config IH_VERIFY_CRC8
+	bool "Crc8"
+
+config IH_VERIFY_SIGN
+	bool "Sign"
+
+endchoice
+
+choice
+	prompt "Select compress type"
+	default IH_COMP_NONE
+
+config IH_COMP_NONE
+	bool "none"
+
+config IH_COMP_LZO
+	bool "lzo"
+
+config IH_COMP_RLE
+	bool "rle"
+
+config IH_COMP_FSE
+	bool "fse"
+
+endchoice
+
+choice
+	prompt "Select log level"
+	default LOG_LEVEL_WARNING
+
+config LOG_LEVEL_EMERG
+	bool "Emerg"
+	  
+config LOG_LEVEL_ALERT
+	bool "Alert"
+
+config LOG_LEVEL_CRIT
+	bool "Critical"
+
+config LOG_LEVEL_ERROR
+	bool "Error"
+
+config LOG_LEVEL_WARNING
+	bool "Warning"
+
+config LOG_LEVEL_NOTICE
+	bool "Normal"
+
+config LOG_LEVEL_INFO
+	bool "Information"
+
+config LOG_LEVEL_DEBUG
+	bool "DEBUG"
+
+endchoice
+
+
+menu "Sign Configuration"
+
+config GEN_SIGN_EN
+	bool "Generate sign image"
+	default n
+
+config GEN_KEY_NAME
+	string "Sign key name"
+
+config GEN_SIGN_SVR
+	string "Sign server ip"
+
+config GEN_SIGN_PORT
+	int "Sign server port"
+	default 10240
+
+endmenu
+
+endmenu

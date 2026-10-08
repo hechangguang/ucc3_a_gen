@@ -1,0 +1,55 @@
+# Kconfig -- slave cpu 层配置文件
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022-2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+#
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+
+menu "Slave CPU Configuration"
+
+choice
+	prompt "SCPU select"
+	default SCPU_NULL
+
+config SCPU_NULL
+	bool "No slave cpu"
+
+config SCPU_V100
+	bool "SCPU v100"
+
+endchoice
+
+config SERIAL_DBG_REGBASE
+    hex "Serial device(for debug) register base address"
+    default 0x0
+    help
+        Set the debug serial-dev register base address
+
+config SERIAL_DBG_BUADRATE
+    int "Set the baudrate of the serial"
+    default 115200
+    help
+        Standard baud rate support(115200 etc..)
+
+config SERIAL_DBG_CLOCK
+	int "Set the clock of this debug serial"
+	default 0
+	help
+        see apb or osc
+
+config SCPU_LOAD_ADDR
+    hex "SCPU slave image flash address"
+    default 0x3e0000
+    help
+        Must be in uimg format
+
+config SCPU_LOAD_BCNT
+    int "SCPU slave image backup count"
+    default 0
+
+config SCPU_LOAD_BAK_OFFSET
+    int "SCPU slave image backup offset"
+    default 0
+
+endmenu

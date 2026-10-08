@@ -1,0 +1,105 @@
+/*
+ *
+ * Automatically generated file; DO NOT EDIT.
+ * TDK OS MiddleWare Configuration
+ *
+ */
+/* Search directory for input files */
+SEARCH_DIR(.)
+/* No dynamic libraries */
+__DYNAMIC = 0;
+ENTRY(_start)
+MEMORY
+{
+  ROM : ORIGIN = 0x22000000, LENGTH = 0x80000
+  RAM : ORIGIN = 0x02200000, LENGTH = 0x80000
+  ITCM : ORIGIN = 0x01000000, LENGTH = 0x8000
+  DTCM : ORIGIN = 0x01080000, LENGTH = 0x8000
+}
+PROVIDE (gu32_stack_top = 0x02200000 + 0x80000 - 0x04);
+REGION_ALIAS("REGION_TEXT", ROM);
+REGION_ALIAS("REGION_DATA", RAM);
+REGION_ALIAS("REGION_BSS", RAM);
+REGION_ALIAS("REGION_ITCM", ITCM);
+REGION_ALIAS("REGION_DTCM", DTCM);
+SECTIONS
+{
+ .text :
+  {
+    *startup*.o*(.text)
+    *(.text)
+    *(.text.startup)
+    *(.text.*)
+    . = ALIGN(0x4);
+    *(.eh_fram)
+    . = ALIGN(0x4);
+    *(.gcc_except_table)
+    *(.lit)
+    *(.srodata)
+    *(.srodata.*)
+    *(.rela.*)
+    *(.rodata)
+    . = ALIGN(0x2) ;
+    __dtb_start = .;
+    KEEP(*dtb.o)
+    __dtb_end = .;
+    *(.rodata.*)
+    . = ALIGN(0x4);
+    __kmod_start = .;
+    KEEP(*(.kmod))
+    __kmod_end = .;
+    __init_start = .;
+    KEEP(*(.init))
+    __init_end = .;
+    __insmod_start = .;
+    KEEP(*(.insmod))
+    __insmod_end = .;
+  __modparam_start = .;
+    KEEP(*(.modparam))
+    __modparam_end = .;
+    . = ALIGN(0x4);
+  __cmd_tbl_start = .;
+    KEEP(*(.cmd_tbls))
+    __cmd_tbl_end = .;
+    _etext = .;
+    __text_end = .;
+  } > REGION_TEXT
+  .data : AT(LOADADDR(.text) + SIZEOF(.text))
+  {
+      . = ALIGN(0x4);
+      _sdata = .;
+    *(.shdata)
+    *(.data .data.*)
+    PROVIDE( __tls_base = . );
+    *(.gcc_exc)
+    PROVIDE( __global_pointer$ = . + 0x800 );
+    *(.sdata .sdata.* .sdata*)
+    . = ALIGN(0x4);
+    _edata = .;
+  } > REGION_DATA
+  .bss BLOCK (0x4) :
+  {
+    __bss_start = . ;
+    *(.shbss)
+    *(.sbss .sbss.* .sbss*)
+    *(.bss .bss.* .bss*)
+    _end = ALIGN (0x8);
+    __end = _end;
+  } > REGION_BSS
+  .itcm : AT(LOADADDR(.data) + SIZEOF(.data))
+  {
+    . = ALIGN(0x4);
+    _itcm_start = .;
+    KEEP(*(.itcm .itcm.*))
+        . = ALIGN(0x4);
+    _itcm_end = .;
+  } > REGION_ITCM
+  .dtcm : AT(LOADADDR(.itcm) + SIZEOF(.itcm))
+  {
+    . = ALIGN(0x4);
+    _dtcm_start = .;
+    KEEP(*(.dtcm .dtcm.*))
+  . = ALIGN(0x4);
+    _dtcm_end = .;
+  } > REGION_DTCM
+}

@@ -1,0 +1,67 @@
+# Kconfig -- Platform 层配置文件
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022-2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+#
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+
+menu "DDR Configuration"
+
+choice
+	prompt "DDR select"
+	default DDR_NULL
+
+config DDR_NULL
+	bool "No extar memory"
+
+config DDR_PRC_V100
+	bool "PRC v100"
+
+endchoice
+
+if DDR_PRC_V100
+
+choice
+	prompt "DDR volume select"
+	default PRC_V100_32MB
+
+config PRC_V100_AUTO
+	bool "Auto"
+
+config PRC_V100_16MB
+	bool "128Mb"
+
+config PRC_V100_32MB
+	bool "256Mb"
+
+endchoice
+
+choice
+	prompt "DDR work frequency select"
+	default PRC_V100_FREQ_250MHZ
+
+config PRC_V100_FREQ_250MHZ
+	bool "250MHZ"
+
+config PRC_V100_FREQ_200MHZ
+	bool "200MHZ"
+
+endchoice
+
+config PRC_V100_BANK0_ADDR
+	hex "Set bank0 ctrl reg addr"
+	default 0x001d0000
+	help
+		if set to 0, the bank is invalid
+
+config PRC_V100_BANK1_ADDR
+	hex "Set bank1 ctrl reg addr"
+	default 0x001e0000
+	help
+		if set to 0, the bank is invalid
+
+endif
+
+
+endmenu

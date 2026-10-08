@@ -1,0 +1,14 @@
+# 
+# Makefile -- cpl kernel 顶层 Makefile, 通过调用 tsp 进行编译
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+# 
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+# 
+
+TSP_ROOT := $(os_root)
+
+build_freertos:
+	@ make -C $(TSP_ROOT) -f Makefile_modules CALL_DIR=$(MOD_DIR) modules V=1

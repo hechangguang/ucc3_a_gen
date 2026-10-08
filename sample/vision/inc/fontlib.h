@@ -1,0 +1,850 @@
+/*
+ * fontlib.h -- tdk 字库 接口等声明头文件
+ * Created by : Top-Silicon Software Team
+ * Copyright : (C) 2024 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+ * 
+ * This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+ * may not be copied or distributed in any isomorphic form without the prior
+ * written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+ */
+#ifndef __FONTLIB_H__
+#define __FONTLIB_H__
+
+#ifdef __cplusplus
+#if __cplusplus
+extern "C"{
+#endif
+
+#endif /* __cplusplus */
+#include <base/ts_type.h>
+#include <base/ts_compiler.h>
+
+//#define LIBFONT_16X16  //屏蔽：32X32字库，打开：16X16字库
+// #ifndef CONFIG_SNR_RV1280
+//#define LIBFONT_16X16
+// #endif
+
+// #ifdef LIBFONT_16X16
+
+// #define FONT_HALF_WIDTH		(1)
+// #define FONT_HALF_HEIGHT	(16)
+// #define FONT_HALF_SIZE		(FONT_HALF_WIDTH * FONT_HALF_HEIGHT)
+
+// #define FONT_FULL_WIDTH		(2)
+// #define FONT_FULL_HEIGHT	(16)
+// #define FONT_FULL_SIZE		(FONT_FULL_WIDTH * FONT_FULL_HEIGHT)
+
+#include "fontlib_16x16.h"
+
+// #else
+
+// #define FONT_HALF_WIDTH		(2)
+// #define FONT_HALF_HEIGHT	(32)
+// #define FONT_HALF_SIZE		(FONT_HALF_WIDTH * FONT_HALF_HEIGHT)
+
+// #define FONT_FULL_WIDTH		(4)
+// #define FONT_FULL_HEIGHT	(32)
+// #define FONT_FULL_SIZE		(FONT_FULL_WIDTH * FONT_FULL_HEIGHT)
+
+#include "fontlib_32x32.h"
+
+// #endif
+
+
+#define OSD_COLOR_SIZE      (8)
+
+/* 矩形框属性 */
+typedef struct ts_fontl_rect_attr_s {
+    /* 矩形框坐标、大小 */
+    ts_u16 u16_left;
+    ts_u16 u16_top;
+    ts_u16 u16_width;
+    ts_u16 u16_height;
+
+    /* 矩形框边框粗细大小 */
+    ts_u08 u08_thick;
+
+    /* 初始是否可见 */
+    ts_u08 u08_visiable;
+
+    /* 优先级 */
+    ts_u08 u08_priority;
+
+    /* 边框颜色 */
+    ts_u08 u08_color;
+} ts_fontl_rect_attr_s_t;
+
+
+/* 标签属性,仅支持 2bit 颜色位宽 */
+typedef struct ts_fontl_lbl_atts_s {
+    /* 坐标、大小 */
+    ts_u16 u16_left;
+    ts_u16 u16_top;
+
+    /* 固定大小 */
+    ts_u16 u16_width;
+    ts_u16 u16_height;
+
+    /* 初始状态是否可见 */
+    ts_u08 u08_visiable;
+
+    /* 优先级 */
+    ts_u08 u08_priority;
+
+    /* 透明度， 0..100 完全不透明到透明;  -1 使用调色板透明度 */
+    ts_s08 s08_alpha;
+
+    /* 反色 */
+    ts_u08 u08_auto_invert;
+
+    /* 字体颜色 */
+    ts_u08 u08_font_color;
+
+    /* 背景颜色 */
+    ts_u08 u08_bg_color;
+
+    /* 外框颜色 */
+    ts_u08 u08_rim_color;
+
+    /* 外框宽度 */
+    ts_u08 u08_rim_width;
+} ts_fontl_lbl_atts_s_t;
+
+
+/* OSD 属性 */
+typedef struct ts_fontl_osd_attr_s {
+    /* 坐标、大小 */
+    ts_u16 u16_left;
+    ts_u16 u16_top;
+
+    /* 颜色位宽 */
+    ts_u08 u08_pxi_bw;
+
+    /* 初始状态是否可见 */
+    ts_u08 u08_visiable;
+
+    /* 优先级 */
+    ts_u08 u08_priority;
+
+    /* 透明度， 0..100 完全不透明到透明;  -1 使用调色板透明度 */
+    ts_s08 s08_alpha;
+
+    /* 反色 */
+    ts_u08 u08_auto_invert;
+
+    /* 字体颜色 */
+    ts_u08 u08_font_color;
+
+    /* 背景颜色 */
+    ts_u08 u08_bg_color;
+
+    /* 对齐保留 */
+    ts_u08 u08_rev;
+} ts_fontl_osd_attr_s_t;
+
+
+/* 十字光标属性 */
+typedef struct ts_fontl_cursor_attr_s {
+    /* 矩形框坐标、大小 */
+    ts_u16 u16_center_left;
+    ts_u16 u16_center_top;
+    ts_u16 u16_width;
+    ts_u16 u16_height;
+
+    /* 十字光标类型 */
+    ts_u08 u08_type;
+
+    /* 中心点与十字标的空隙 */
+    ts_u08 u08_margin;
+    ts_u08 u08_thick;
+
+    /* 中心点是否闪烁 */
+    ts_u08 u08_blink;
+    ts_u08 u08_center_hide;
+
+    ts_u08 u08_rev;
+    ts_u16 u16_rev;
+
+    /* 边长 u16_rect_width = u16_rect_height 为正方形 */
+    //ts_u16 u16_rect_width;
+    //ts_u16 u16_rect_height;
+
+    /* 初始状态是否可见 */
+    ts_u08 u08_visiable;
+
+    /* 优先级 */
+    ts_u08 u08_priority;
+
+    /* 中心点颜色 */
+    ts_u08 u08_center_color;
+
+    /* 十字颜色 */
+    ts_u08 u08_cursor_color;
+} ts_fontl_cursor_attr_s_t;
+
+
+/* osd 属性 */
+#define OSD_ALIGN_CENTER        (0)
+#define OSD_ALIGN_LEFT          (1)
+#define OSD_ALIGN_RIGHT         (2)
+typedef struct ts_osd_line_s {
+    /* 左对齐方式 */
+    ts_u08 u08_left_align_type;
+
+    /* 左部分最大字符个数，按照 8x16 计算，即 1 个字节代表一个字符 */
+    ts_u08 u08_left_font_num;
+
+    /* 右对齐方式 */
+    ts_u08 u08_right_align_type;
+
+    /* 右部分最大字符个数，按照 8x16 计算，即 1 个字节代表一个字符 */
+    ts_u08 u08_right_font_num;
+} ts_osd_line_s_t;
+
+typedef struct ts_osd_s {
+    /* osd 名称，用于区分不同 osd */
+    const ts_char *pc_name;
+
+    /* 单条 osd 属性，多条合并共用此属性 */
+    ts_osd_attr_s_t st_osd_attr;
+
+    /* 左右两边的留空，像素单位， 1bit 颜色深度需 8 像素对齐， 2bit 颜色深度可 4 像素对齐 */
+    ts_u08 u08_lr_margin;
+
+    /* 上下留空，像素单位，可 1 像素对齐 */
+    ts_u08 u08_tb_margin;
+
+    ts_u16 u16_rev0;
+
+    /* 外框配置 */
+    ts_u08 u08_box_en;
+    ts_u08 u08_box_width;
+    ts_u08 u08_box_color;
+
+    /* 多条 osd 个数 */
+    ts_u08 u08_line_num;
+
+    /* 内部变量，用户只读, 保存多条合并后加速边框的总高度 */
+    ts_u16 u16_ro_height;
+    ts_u08 u08_ro_line_height;
+    ts_u08 u08_ro_rev0;
+
+    /* 创建的 osd nodebuffer 句柄 */
+    ts_nodebuf_s_t *pst_hnode;
+
+    /* 绑定的设备节点 */
+    ts_mdev_t h_osd_dev;
+
+    /* 保留 */
+    ts_u32 u32_rev0;
+
+    /* 为每行字符，增加左右两边字符分割信息 */
+    ts_osd_line_s_t *pst_lines;
+} ts_osd_s_t;
+
+/* 更新 OSD 按照左属性，仅用于更新整行, 但位宽按照整个 OSD 位宽计算 */
+#define MNU_UPD_LINE        (0)
+
+/* 更新 OSD 按照左属性，仅用于更新左部分显示内容 */
+#define MNU_UPD_LEFT        (1)
+
+/* 更新 OSD 按照右属性，仅用于更新右部分显示内容 */
+#define MNU_UPD_RIGHT       (2)
+
+/* rgb 256 色表 */
+static TS_FUNC_UNUSED ts_rgb_s_t sast_rgb256[256] = {
+    {0x00, 0x00, 0x00, 0x00},
+    {0x80, 0x00, 0x00, 0x00},
+    {0x00, 0x80, 0x00, 0x00},
+    {0x80, 0x80, 0x00, 0x00},
+    {0x00, 0x00, 0x80, 0x00},
+    {0x80, 0x00, 0x80, 0x00},
+    {0x00, 0x80, 0x80, 0x00},
+    {0xc0, 0xc0, 0xc0, 0x00},
+    {0x80, 0x80, 0x80, 0x00},
+    {0xff, 0x00, 0x00, 0x00},
+    {0x00, 0xff, 0x00, 0x00},
+    {0xff, 0xff, 0x00, 0x00},
+    {0x00, 0x00, 0xff, 0x00},
+    {0xff, 0x00, 0xff, 0x00},
+    {0x00, 0xff, 0xff, 0x00},
+    {0xff, 0xff, 0xff, 0x00},
+    {0x00, 0x00, 0x00, 0x00},
+    {0x00, 0x00, 0x5f, 0x00},
+    {0x00, 0x00, 0x87, 0x00},
+    {0x00, 0x00, 0xaf, 0x00},
+    {0x00, 0x00, 0xd7, 0x00},
+    {0x00, 0x00, 0xff, 0x00},
+    {0x00, 0x5f, 0x00, 0x00},
+    {0x00, 0x5f, 0x5f, 0x00},
+    {0x00, 0x5f, 0x87, 0x00},
+    {0x00, 0x5f, 0xaf, 0x00},
+    {0x00, 0x5f, 0xd7, 0x00},
+    {0x00, 0x5f, 0xff, 0x00},
+    {0x00, 0x87, 0x00, 0x00},
+    {0x00, 0x87, 0x5f, 0x00},
+    {0x00, 0x87, 0x87, 0x00},
+    {0x00, 0x87, 0xaf, 0x00},
+    {0x00, 0x87, 0xd7, 0x00},
+    {0x00, 0x87, 0xff, 0x00},
+    {0x00, 0xaf, 0x00, 0x00},
+    {0x00, 0xaf, 0x5f, 0x00},
+    {0x00, 0xaf, 0x87, 0x00},
+    {0x00, 0xaf, 0xaf, 0x00},
+    {0x00, 0xaf, 0xd7, 0x00},
+    {0x00, 0xaf, 0xff, 0x00},
+    {0x00, 0xd7, 0x00, 0x00},
+    {0x00, 0xd7, 0x5f, 0x00},
+    {0x00, 0xd7, 0x87, 0x00},
+    {0x00, 0xd7, 0xaf, 0x00},
+    {0x00, 0xd7, 0xd7, 0x00},
+    {0x00, 0xd7, 0xff, 0x00},
+    {0x00, 0xff, 0x00, 0x00},
+    {0x00, 0xff, 0x5f, 0x00},
+    {0x00, 0xff, 0x87, 0x00},
+    {0x00, 0xff, 0xaf, 0x00},
+    {0x00, 0xff, 0xd7, 0x00},
+    {0x00, 0xff, 0xff, 0x00},
+    {0x5f, 0x00, 0x00, 0x00},
+    {0x5f, 0x00, 0x5f, 0x00},
+    {0x5f, 0x00, 0x87, 0x00},
+    {0x5f, 0x00, 0xaf, 0x00},
+    {0x5f, 0x00, 0xd7, 0x00},
+    {0x5f, 0x00, 0xff, 0x00},
+    {0x5f, 0x5f, 0x00, 0x00},
+    {0x5f, 0x5f, 0x5f, 0x00},
+    {0x5f, 0x5f, 0x87, 0x00},
+    {0x5f, 0x5f, 0xaf, 0x00},
+    {0x5f, 0x5f, 0xd7, 0x00},
+    {0x5f, 0x5f, 0xff, 0x00},
+    {0x5f, 0x87, 0x00, 0x00},
+    {0x5f, 0x87, 0x5f, 0x00},
+    {0x5f, 0x87, 0x87, 0x00},
+    {0x5f, 0x87, 0xaf, 0x00},
+    {0x5f, 0x87, 0xd7, 0x00},
+    {0x5f, 0x87, 0xff, 0x00},
+    {0x5f, 0xaf, 0x00, 0x00},
+    {0x5f, 0xaf, 0x5f, 0x00},
+    {0x5f, 0xaf, 0x87, 0x00},
+    {0x5f, 0xaf, 0xaf, 0x00},
+    {0x5f, 0xaf, 0xd7, 0x00},
+    {0x5f, 0xaf, 0xff, 0x00},
+    {0x5f, 0xd7, 0x00, 0x00},
+    {0x5f, 0xd7, 0x5f, 0x00},
+    {0x5f, 0xd7, 0x87, 0x00},
+    {0x5f, 0xd7, 0xaf, 0x00},
+    {0x5f, 0xd7, 0xd7, 0x00},
+    {0x5f, 0xd7, 0xff, 0x00},
+    {0x5f, 0xff, 0x00, 0x00},
+    {0x5f, 0xff, 0x5f, 0x00},
+    {0x5f, 0xff, 0x87, 0x00},
+    {0x5f, 0xff, 0xaf, 0x00},
+    {0x5f, 0xff, 0xd7, 0x00},
+    {0x5f, 0xff, 0xff, 0x00},
+    {0x87, 0x00, 0x00, 0x00},
+    {0x87, 0x00, 0x5f, 0x00},
+    {0x87, 0x00, 0x87, 0x00},
+    {0x87, 0x00, 0xaf, 0x00},
+    {0x87, 0x00, 0xd7, 0x00},
+    {0x87, 0x00, 0xff, 0x00},
+    {0x87, 0x5f, 0x00, 0x00},
+    {0x87, 0x5f, 0x5f, 0x00},
+    {0x87, 0x5f, 0x87, 0x00},
+    {0x87, 0x5f, 0xaf, 0x00},
+    {0x87, 0x5f, 0xd7, 0x00},
+    {0x87, 0x5f, 0xff, 0x00},
+    {0x87, 0x87, 0x00, 0x00},
+    {0x87, 0x87, 0x5f, 0x00},
+    {0x87, 0x87, 0x87, 0x00},
+    {0x87, 0x87, 0xaf, 0x00},
+    {0x87, 0x87, 0xd7, 0x00},
+    {0x87, 0x87, 0xff, 0x00},
+    {0x87, 0xaf, 0x00, 0x00},
+    {0x87, 0xaf, 0x5f, 0x00},
+    {0x87, 0xaf, 0x87, 0x00},
+    {0x87, 0xaf, 0xaf, 0x00},
+    {0x87, 0xaf, 0xd7, 0x00},
+    {0x87, 0xaf, 0xff, 0x00},
+    {0x87, 0xd7, 0x00, 0x00},
+    {0x87, 0xd7, 0x5f, 0x00},
+    {0x87, 0xd7, 0x87, 0x00},
+    {0x87, 0xd7, 0xaf, 0x00},
+    {0x87, 0xd7, 0xd7, 0x00},
+    {0x87, 0xd7, 0xff, 0x00},
+    {0x87, 0xff, 0x00, 0x00},
+    {0x87, 0xff, 0x5f, 0x00},
+    {0x87, 0xff, 0x87, 0x00},
+    {0x87, 0xff, 0xaf, 0x00},
+    {0x87, 0xff, 0xd7, 0x00},
+    {0x87, 0xff, 0xff, 0x00},
+    {0xaf, 0x00, 0x00, 0x00},
+    {0xaf, 0x00, 0x5f, 0x00},
+    {0xaf, 0x00, 0x87, 0x00},
+    {0xaf, 0x00, 0xaf, 0x00},
+    {0xaf, 0x00, 0xd7, 0x00},
+    {0xaf, 0x00, 0xff, 0x00},
+    {0xaf, 0x5f, 0x00, 0x00},
+    {0xaf, 0x5f, 0x5f, 0x00},
+    {0xaf, 0x5f, 0x87, 0x00},
+    {0xaf, 0x5f, 0xaf, 0x00},
+    {0xaf, 0x5f, 0xd7, 0x00},
+    {0xaf, 0x5f, 0xff, 0x00},
+    {0xaf, 0x87, 0x00, 0x00},
+    {0xaf, 0x87, 0x5f, 0x00},
+    {0xaf, 0x87, 0x87, 0x00},
+    {0xaf, 0x87, 0xaf, 0x00},
+    {0xaf, 0x87, 0xd7, 0x00},
+    {0xaf, 0x87, 0xff, 0x00},
+    {0xaf, 0xaf, 0x00, 0x00},
+    {0xaf, 0xaf, 0x5f, 0x00},
+    {0xaf, 0xaf, 0x87, 0x00},
+    {0xaf, 0xaf, 0xaf, 0x00},
+    {0xaf, 0xaf, 0xd7, 0x00},
+    {0xaf, 0xaf, 0xff, 0x00},
+    {0xaf, 0xd7, 0x00, 0x00},
+    {0xaf, 0xd7, 0x5f, 0x00},
+    {0xaf, 0xd7, 0x87, 0x00},
+    {0xaf, 0xd7, 0xaf, 0x00},
+    {0xaf, 0xd7, 0xd7, 0x00},
+    {0xaf, 0xd7, 0xff, 0x00},
+    {0xaf, 0xff, 0x00, 0x00},
+    {0xaf, 0xff, 0x5f, 0x00},
+    {0xaf, 0xff, 0x87, 0x00},
+    {0xaf, 0xff, 0xaf, 0x00},
+    {0xaf, 0xff, 0xd7, 0x00},
+    {0xaf, 0xff, 0xff, 0x00},
+    {0xd7, 0x00, 0x00, 0x00},
+    {0xd7, 0x00, 0x5f, 0x00},
+    {0xd7, 0x00, 0x87, 0x00},
+    {0xd7, 0x00, 0xaf, 0x00},
+    {0xd7, 0x00, 0xd7, 0x00},
+    {0xd7, 0x00, 0xff, 0x00},
+    {0xd7, 0x5f, 0x00, 0x00},
+    {0xd7, 0x5f, 0x5f, 0x00},
+    {0xd7, 0x5f, 0x87, 0x00},
+    {0xd7, 0x5f, 0xaf, 0x00},
+    {0xd7, 0x5f, 0xd7, 0x00},
+    {0xd7, 0x5f, 0xff, 0x00},
+    {0xd7, 0x87, 0x00, 0x00},
+    {0xd7, 0x87, 0x5f, 0x00},
+    {0xd7, 0x87, 0x87, 0x00},
+    {0xd7, 0x87, 0xaf, 0x00},
+    {0xd7, 0x87, 0xd7, 0x00},
+    {0xd7, 0x87, 0xff, 0x00},
+    {0xd7, 0xaf, 0x00, 0x00},
+    {0xd7, 0xaf, 0x5f, 0x00},
+    {0xd7, 0xaf, 0x87, 0x00},
+    {0xd7, 0xaf, 0xaf, 0x00},
+    {0xd7, 0xaf, 0xd7, 0x00},
+    {0xd7, 0xaf, 0xff, 0x00},
+    {0xd7, 0xd7, 0x00, 0x00},
+    {0xd7, 0xd7, 0x5f, 0x00},
+    {0xd7, 0xd7, 0x87, 0x00},
+    {0xd7, 0xd7, 0xaf, 0x00},
+    {0xd7, 0xd7, 0xd7, 0x00},
+    {0xd7, 0xd7, 0xff, 0x00},
+    {0xd7, 0xff, 0x00, 0x00},
+    {0xd7, 0xff, 0x5f, 0x00},
+    {0xd7, 0xff, 0x87, 0x00},
+    {0xd7, 0xff, 0xaf, 0x00},
+    {0xd7, 0xff, 0xd7, 0x00},
+    {0xd7, 0xff, 0xff, 0x00},
+    {0xff, 0x00, 0x00, 0x00},
+    {0xff, 0x00, 0x5f, 0x00},
+    {0xff, 0x00, 0x87, 0x00},
+    {0xff, 0x00, 0xaf, 0x00},
+    {0xff, 0x00, 0xd7, 0x00},
+    {0xff, 0x00, 0xff, 0x00},
+    {0xff, 0x5f, 0x00, 0x00},
+    {0xff, 0x5f, 0x5f, 0x00},
+    {0xff, 0x5f, 0x87, 0x00},
+    {0xff, 0x5f, 0xaf, 0x00},
+    {0xff, 0x5f, 0xd7, 0x00},
+    {0xff, 0x5f, 0xff, 0x00},
+    {0xff, 0x87, 0x00, 0x00},
+    {0xff, 0x87, 0x5f, 0x00},
+    {0xff, 0x87, 0x87, 0x00},
+    {0xff, 0x87, 0xaf, 0x00},
+    {0xff, 0x87, 0xd7, 0x00},
+    {0xff, 0x87, 0xff, 0x00},
+    {0xff, 0xaf, 0x00, 0x00},
+    {0xff, 0xaf, 0x5f, 0x00},
+    {0xff, 0xaf, 0x87, 0x00},
+    {0xff, 0xaf, 0xaf, 0x00},
+    {0xff, 0xaf, 0xd7, 0x00},
+    {0xff, 0xaf, 0xff, 0x00},
+    {0xff, 0xd7, 0x00, 0x00},
+    {0xff, 0xd7, 0x5f, 0x00},
+    {0xff, 0xd7, 0x87, 0x00},
+    {0xff, 0xd7, 0xaf, 0x00},
+    {0xff, 0xd7, 0xd7, 0x00},
+    {0xff, 0xd7, 0xff, 0x00},
+    {0xff, 0xff, 0x00, 0x00},
+    {0xff, 0xff, 0x5f, 0x00},
+    {0xff, 0xff, 0x87, 0x00},
+    {0xff, 0xff, 0xaf, 0x00},
+    {0xff, 0xff, 0xd7, 0x00},
+    {0xff, 0xff, 0xff, 0x00},
+    {0x08, 0x08, 0x08, 0x00},
+    {0x12, 0x12, 0x12, 0x00},
+    {0x1c, 0x1c, 0x1c, 0x00},
+    {0x26, 0x26, 0x26, 0x00},
+    {0x30, 0x30, 0x30, 0x00},
+    {0x3a, 0x3a, 0x3a, 0x00},
+    {0x44, 0x44, 0x44, 0x00},
+    {0x4e, 0x4e, 0x4e, 0x00},
+    {0x58, 0x58, 0x58, 0x00},
+    {0x62, 0x62, 0x62, 0x00},
+    {0x6c, 0x6c, 0x6c, 0x00},
+    {0x76, 0x76, 0x76, 0x00},
+    {0x80, 0x80, 0x80, 0x00},
+    {0x8a, 0x8a, 0x8a, 0x00},
+    {0x94, 0x94, 0x94, 0x00},
+    {0x9e, 0x9e, 0x9e, 0x00},
+    {0xa8, 0xa8, 0xa8, 0x00},
+    {0xb2, 0xb2, 0xb2, 0x00},
+    {0xbc, 0xbc, 0xbc, 0x00},
+    {0xc6, 0xc6, 0xc6, 0x00},
+    {0xd0, 0xd0, 0xd0, 0x00},
+    {0xda, 0xda, 0xda, 0x00},
+    {0xe4, 0xe4, 0xe4, 0x00},
+    {0xee, 0xee, 0xee, 0x00}
+};
+
+#if 0
+/* 实际数据位置按照序号乘以大小 */
+static TS_FUNC_UNUSED ts_u08 sau08_asiic[] = {
+    ' ',
+    ',',
+    '-',
+    ':',
+    '.',
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'C',
+    'D',
+    'E',
+    'I',
+    'L',
+    'N',
+    'O',
+    'P',
+    'S',
+    'T',
+    'R',
+
+    /* end */
+    0
+};
+
+static TS_FUNC_UNUSED ts_u32 sau32_utf8[] = {
+    /* ℃ */
+    0xE28483,
+
+    /* 中 */
+    0xE4B8AD,
+
+    /* 文 */
+    0xE69687,
+
+    /* 你 */
+    0xE4BDA0,
+
+    /* 好 */
+    0xE5A5BD,
+
+    /* 菜*/
+    0xE88F9C,
+
+    /* 单 */
+    0xE58D95,
+
+    /* 混 */
+    0xE6B7B7,
+
+    /* 合 */
+    0xE59088,
+
+    /* 杭 */
+    0xE69DAD,
+
+    /* 州 */
+    0xE5B79E,
+    
+    /* 极 */
+    0xE69E81,
+
+    /* 钛 */
+    0xE9929B,
+
+    /* 微 */
+    0xE5BEAE,
+
+    /* 最 */
+    0xE69C80,
+
+    /* 高 */
+    0xE9AB98,
+
+    /* 温 */
+    0xE6B8A9,
+
+    /* 度 */
+    0xE5BAA6,
+
+    /* 心 */
+    0xE5BF83,
+
+    /* 低 */
+    0xE4BD8E,
+
+    /* 平 */
+    0xE5B9B3,
+
+    /* 均 */
+    0xE59D87,
+
+    /* 图 */
+    0xE59BBE,
+
+    /* 像 */
+    0xE5838F,
+
+    /* 系 */
+    0xE7B3BB,
+
+    /* 统 */
+    0xE7BB9F,
+
+    /* end */
+    0
+};
+
+
+#endif
+
+/* 
+ * 函数名 :  ts_lib_osd_set_color
+ * 描  述 :  设置 osd 颜色信息，如果未指定 osd ， 则设置全局默认颜色
+ * 输  入 :  参数           描述
+ *          pst_hosd        指定 osd，如果为 ts_null, 则配置全局默认颜色
+ *          u32_pix_bw      颜色深度
+ *          u32_font_color  字体颜色
+ *          u32_bg_color    背景色
+ *          u32_box_color   边框颜色
+ *          s08_alpha       透明度
+ *          u08_auto_invert 是否自动反转
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *           无             无
+ */
+ts_void ts_lib_osd_set_color(ts_osd_s_t *pst_hosd, ts_u32 u32_pix_bw, ts_u32 u32_font_color, 
+            ts_u32 u32_bg_color, ts_u32 u32_box_color, ts_s08 s08_alpha, ts_u08 u08_auto_invert);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_set_margin
+ * 描  述 :  设置 osd 两边留白宽度，宽度计算包括边框宽度
+ * 输  入 :  参数           描述
+ *          pst_hosd        指定 osd，如果为 ts_null, 则配置全局默认 margin
+ *          u32_pix_bw      在全局的时候，指定颜色深度， 指定 osd 时被忽略
+ *          u32_lr_margin   左右留白宽度, 1bit 颜色深度需 8 像素对齐， 2bit 颜色深度需 4 像素对齐
+ *          u32_tb_margin   上下两边留白
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *           无             无
+ */
+ts_void ts_lib_osd_set_margin(ts_osd_s_t *pst_hosd, ts_u32 u32_pix_bw, ts_u32 u32_lr_margin, ts_u32 u32_tb_margin);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_create
+ * 描  述 :  创建一个指定大小的 osd 空间，无需关系颜色、坐标等配置
+ * 输  入 :  参数           描述
+ *          h_osd_dev       指定创建的 osd 设备， ts_null 则不指定设备
+ *          pc_name         osd 名称
+ *          u32_pix_bw      像素颜色深度, 本库仅支持最大 2bit 颜色深度
+ *          u32_width       osd 宽度，每行统一
+ *          u32_line_height 单行高度
+ *          u32_line_num    行个数， > 0; 如果配置 0 ，会强制修正成 1
+ *          u32_box_width   边框宽度，上下左右一致，如果为 0，则无边框
+ *          u32_visible     可见状态， 0：隐藏；>0：显示
+ *          u32_priority    优先级，0..100, 0 优先级最低
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *          ts_null         创建失败
+ *          非 ts_null      创建成功，返回句柄
+ */
+ts_osd_s_t *ts_lib_osd_create(ts_mdev_t h_osd_dev, const ts_char *pc_name, ts_u32 u32_pix_bw, ts_u32 u32_width, 
+            ts_u32 u32_line_height, ts_u32 u32_line_num, ts_u32 u32_box_width, ts_u32 u32_visible, ts_u32 u32_priority);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_set_visible
+ * 描  述 :  设置 osd 显示属性
+ * 输  入 :  参数           描述
+ *          pst_hosd        指定 osd
+ *          u32_visible     可见状态， 0：隐藏；>0：显示
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *           TS_OK          设置成功
+ *          -TS_EINVAL      传入无效参数
+ */
+ts_s32 ts_lib_osd_set_visible(ts_osd_s_t *pst_hosd, ts_u32 u32_visible);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_set_xy
+ * 描  述 :  设置 osd 起始点坐标
+ * 输  入 :  参数           描述
+ *          pst_hosd        指定 osd
+ *          u32_left        左坐标
+ *          u32_top         顶坐标
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *           TS_OK          设置成功
+ *          -TS_EINVAL      传入无效参数
+ */
+ts_s32 ts_lib_osd_set_xy(ts_osd_s_t *pst_hosd, ts_u32 u32_left, ts_u32 u32_top);
+
+
+/* 
+ * 函数名 :  ts_lib_node_set_xy
+ * 描  述 :  设置节点起始点坐标
+ * 输  入 :  参数           描述
+ *          h_osd_dev        指定 osd 设备
+ *          pst_hnode        节点句柄
+ *          u32_left        左坐标
+ *          u32_top         顶坐标
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *           TS_OK          设置成功
+ *          -TS_EINVAL      传入无效参数
+ */
+ts_s32 ts_lib_node_set_xy(ts_mdev_t h_osd_dev, ts_nodebuf_s_t *pst_hnode, ts_u32 u32_left, ts_u32 u32_top);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_set_line_attr
+ * 描  述 :  设置 osd 每行的布局属性
+ * 输  入 :  参数           描述
+ *          pst_hosd        指定 osd
+ *          pst_lines       行属性句柄
+ *          u32_line_num    行数
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *           TS_OK          设置成功
+ *          -TS_EINVAL      传入无效参数
+ */
+ts_s32 ts_lib_osd_set_line_attr(ts_osd_s_t *pst_osd, ts_osd_line_s_t *pst_lines, ts_u32 u32_line_num);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_set
+ * 描  述 :  设置一个已经创建的 osd，配置实际显示的宽高，内容等
+ * 输  入 :  参数           描述
+ *          pst_osd         创建的 osd 句柄
+ *          pst_next_node   避免刷新破坏显示的替换缓冲，如果配置成 ts_null，则直接刷新在现有缓存
+ *          u32_left        指定显示左坐标， 与 u32_top 构成左上角坐标
+ *          u32_top         指定显示顶坐标， 与 u32_left 构成左上角坐标
+ *          pc_string       指定显示的字符串，支持 '\n' 换行, 可以配置成 ts_null, 后续再通过 ts_lib_fontl_update_osd 更新显示
+ *          u32_max_line    指定显示行数， pc_string 实际行数大于此值时，最终显示取此配置
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *          ts_null         设置失败
+ *          非 ts_null      设置成功，返回的是此 osd 当前挂载的缓存句柄
+ */
+ts_nodebuf_s_t * ts_lib_osd_set(ts_osd_s_t *pst_osd, ts_nodebuf_s_t *pst_next_node, ts_u32 u32_left, 
+    ts_u32 u32_top, const ts_char *pc_string, ts_u32 u32_max_line);
+
+
+/* 
+ * 函数名 :  ts_lib_osd_update
+ * 描  述 :  按照指定行并且基于此行的布局属性更新 osd 内容
+ * 输  入 :  参数           描述
+ *          pst_osd         osd 属性句柄
+ *          pst_next_node   双缓存，如果配置 ts_null, 则直接写入当前缓存
+ *          pc_str          指定字符串
+ *          u32_line        指定行号
+ *          u32_upd_type    更新类型，取值范围： MNU_UPD_LINE, MNU_UPD_LEFT, MNU_UPD_RIGHT
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *          ts_null         设置失败
+ *          非 ts_null      设置成功，返回的是此 osd 当前挂载的缓存句柄
+ */
+ts_nodebuf_s_t *ts_lib_osd_update(ts_osd_s_t *pst_osd, ts_nodebuf_s_t *pst_next_node, 
+    ts_char *pc_str, ts_u32 u32_line_idx, ts_u32 u32_upd_type);
+
+/* 
+ * 函数名 :  ts_lib_osd_create_dbbuf
+ * 描  述 :  根据传入的 osd 配置，创建一个缓冲，用于双缓存交替使用, 行个数相同的 OSD 可共用一个双缓存
+ * 输  入 :  参数           描述
+ *          h_osd_dev       指定创建的 osd 设备
+ *          pst_osd         创建的 osd 属性配置
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *          ts_null         创建失败
+ *          非 ts_null      创建成功，返回句柄
+ */
+ts_nodebuf_s_t * ts_lib_osd_create_dbbuf(ts_osd_s_t *pst_osd);
+
+
+/* 
+ * 函数名 :  ts_lib_fontl_gen_cursor
+ * 描  述 :  创建一个光标
+ * 输  入 :  参数           描述
+ *          h_osd_dev       指定创建的 osd 设备
+ *          pst_cursor_attr 指定光标属性
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *          ts_null         创建失败
+ *          非 ts_null      创建成功，返回句柄
+ */
+ts_nodebuf_s_t *ts_lib_fontl_gen_cursor(ts_mdev_t h_osd_dev, ts_fontl_cursor_attr_s_t *pst_cursor_attr);
+
+
+/* 
+ * 函数名 :  ts_lib_fontl_gen_rectangle
+ * 描  述 :  创建一个矩形框
+ * 输  入 :  参数           描述
+ *          h_osd_dev       指定创建的 osd 设备
+ *          pst_rect_attr   指定矩形框属性
+ * 输  出 :  参数           描述
+ *           无             无
+ * 返  回 :  返回值         描述
+ *          ts_null         创建失败
+ *          非 ts_null      创建成功，返回句柄
+ */
+ts_nodebuf_s_t *ts_lib_fontl_gen_rectangle(ts_mdev_t h_osd_dev, ts_fontl_rect_attr_s_t *pst_rect_attr);
+
+
+ts_nodebuf_s_t *ts_lib_osd_8bit_create(ts_mdev_t h_osd_dev, ts_u32 u32_left, ts_u32 u32_top, ts_u32 u32_width, ts_u32 u32_height);
+
+
+#ifdef __cplusplus
+#if __cplusplus
+}
+#endif
+#endif /* __cplusplus */
+
+#endif /* __FONTLIB_H__ */
+

@@ -1,0 +1,55 @@
+# Kconfig -- Platform 层配置文件
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022-2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+#
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+
+menu "Platform Configuration"
+
+choice
+	prompt "Board select"
+	default DEVB_V1
+
+config DEVB_V1
+	bool "Development board verison 1"
+
+config T10X
+	bool "T10x"
+
+endchoice
+
+config BOARD_NAME
+	string
+	default "devbv1" if DEVB_V1
+	default "t10x" if T10X
+
+config RAM_BASE_ADDR
+	hex "RAM base address"
+	default 0x00100000
+
+config RAM_SIZE
+	hex "RAM size"
+	default 0x8000
+
+config TEXT_BASE_ADDR
+	hex "Text base address"
+	default RAM_BASE_ADDR
+
+menu "Clock Configuration"
+
+config CLK_APB
+	int "Set APB clock"
+	default 50000000
+
+config CLK_AHB
+	int "Set AHB clock"
+	default 100000000
+
+endmenu
+
+config BUILD_FOR_FPGA
+	bool "Build for fpga"
+
+endmenu

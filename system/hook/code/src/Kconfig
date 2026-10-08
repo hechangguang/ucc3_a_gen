@@ -1,0 +1,44 @@
+# Kconfig -- bootup 顶层配置文件
+# Created by : top-silicon Software Team
+# Copyright : (C) 2022 Hangzhou JiTai Silicon Co., Ltd. All rights reserved.
+
+mainmenu "Bootup Configuration"
+
+menu "Build Configuration"
+
+config SAVE_NAME
+	string "Config filename(save to configs)"
+
+config TOOLCHAIN
+	string "Custom toolchain"
+
+config CPU_CFLAGS
+	string "Cpu cflags"
+
+config USER_CFLAGS
+	string "User cflags"
+
+config EXT_LD_FLAGS
+	string "Ld flag"
+
+config OPTIMIZE
+	string "Set optimization(-O0, -O1, -O2, -Os)"
+	default "-O2"
+	help
+	  Optimization : -O0, -O1, -O2, -Os, default is -O2
+
+config BUILD_DEBUG
+	bool "Build for debug symbol"
+	default n
+	help
+		Add -g to the CFLAGS
+
+endmenu
+
+source "src/platform/Kconfig"
+
+source "src/cmd/Kconfig"
+
+source "src/ih/Kconfig"
+
+source "src/driver/Kconfig"

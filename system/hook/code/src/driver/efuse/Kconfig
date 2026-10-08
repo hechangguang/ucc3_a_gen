@@ -1,0 +1,34 @@
+# Kconfig -- efuse 层配置文件
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022-2024 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+#
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+
+menu "EFUSE Configuration"
+
+choice
+	prompt "EFUSE select"
+	default EFUSE_NULL
+
+config EFUSE_NULL
+	bool "No efuse device"
+
+config EFUSE_V100
+	bool "EFUSE ctrl v100"
+
+endchoice
+
+config EFUSE_REG_ADDR
+	hex "Efuse ctrl reg addr"
+	default 0x00280000
+	help
+		if set to 0, the ctrl disable
+
+config EFUSE_NOT_HAL
+	bool "Not HAL driver"
+	default n
+
+
+endmenu

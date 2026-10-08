@@ -1,0 +1,24 @@
+# Kconfig -- UART 层配置文件
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2022-2025 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+#
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+
+menu "UART Configuration"
+
+choice
+	prompt "UART select"
+	default UART_NULL
+
+config UART_NULL
+	bool "No uart device"
+
+config UART_V100
+	bool "UART tg v100"
+
+endchoice
+
+
+endmenu

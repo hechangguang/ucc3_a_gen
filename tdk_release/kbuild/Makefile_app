@@ -1,0 +1,190 @@
+# 
+# Makefile -- tsp 支持外部模块编译
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+# 
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+# 
+
+# 当前配置的makefile
+
+WORK_DIR := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+
+sinclude $(CALL_DIR)/Makefile
+sinclude $(CALL_DIR)/Makefile.$(ost)
+sinclude $(WORK_DIR)/Makefile
+
+INCLUDE := -I. -I$(os_root)/include -I$(os_root)/include/rtos -I$(tdk_root)/include
+
+BUILD_DIR := $(CALL_DIR)/build/
+
+EXEC_NAME := $(BUILD_DIR)/$(APP_NAME)
+
+# DRV_CALL_FILES := $(patsubst %.c, $(CALL_DIR)/%.c, $(APP_FILES))
+# MK_OBJS := $(patsubst %.c, %.o, $(DRV_CALL_FILES))
+
+OBJ_DIR := $(BUILD_DIR)/obj/
+
+MK_OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(APP_FILES))
+
+
+
+INCLUDE += -I$(CALL_DIR)/$(EXTAR_INC)
+CFLAGS += $(EXTRA_CFLAG)
+
+# auto get libgcc.a
+LIBGCC_A := $(shell $(BUILD_CC)gcc $(BUILD_CPU_CFLAGS) -print-libgcc-file-name)
+LIBS := $(LIBGCC_A)
+MK_DTB_OBJ := $(os_root)/release/board.dtb.a
+
+WHOLE_LIBS += $(MK_DTB_OBJ)
+
+ifeq ($(scpu),y)
+GROUP_LIBS += $(os_root)/release/tsp_scpu.ko
+else
+GROUP_LIBS += $(os_root)/release/tsp.ko
+endif
+
+GROUP_LIBS += $(ROOT_KO_DIR)ts_cpl.ko
+
+LDFLAGS += $(LIBC_EXTRA_FLAGS) $(INCLUDE) -fno-pic
+LDFLAGS += -nostartfiles -Wl,--gc-sections -Wl,-Map,$(BUILD_DIR)$(APP_NAME).map
+
+LDFLAGS += -Wl,--wrap=_malloc_r
+LDFLAGS += -Wl,--wrap=_realloc_r
+LDFLAGS += -Wl,--wrap=_free_r
+LDFLAGS += -Wl,--wrap=_malloc_usable_size_r
+LDFLAGS += -Wl,--wrap=printf  -u _printf_float 
+
+
+ifeq ($(TARGET_LDS),)
+ifeq ($(scpu),y)
+LD_SRC_FILE = $(os_root)/release/tdk_scpu.lds.S
+else
+LD_SRC_FILE = $(os_root)/release/tdk.lds.S
+endif
+
+LDFLAGS += -T $(BUILD_DIR)$(APP_NAME).lds
+else
+LD_SRC_FILE = $(TSP_LDS_S_FILE)
+LDFLAGS += -T $(TARGET_LDS)
+endif
+
+LDFLAGS += -Wl,--whole-archive $(WHOLE_LIBS) -Wl,--no-whole-archive
+LDFLAGS += -Wl,--start-group $(LIBS) $(GROUP_LIBS) -lm -lc -Wl,--end-group
+
+ifeq ($(CONFIG_FREERTOS),y)
+MKUIMG_OPTS := -A riscv
+else
+MKUIMG_OPTS := -A arm
+endif
+
+CFLAGS += -DCONFIG_APP_NAME=\"$(APP_NAME)\"
+
+ifeq ($(scpu),y)
+
+CFLAGS += -DCONFIG_IS_SCPU
+
+# 如果没有配置，使用默认地址
+ifeq ($(CONFIG_SLAVE_LOAD_ADDR),)
+CONFIG_UIMG_LOAD_ADDRESS := 0
+else
+CONFIG_UIMG_LOAD_ADDRESS := $(CONFIG_SLAVE_LOAD_ADDR)
+endif
+
+ifeq ($(CONFIG_SALVE_EP_ADDR),)
+CONFIG_UIMG_EP_ADDRESS := 0
+else
+CONFIG_UIMG_EP_ADDRESS := $(CONFIG_SALVE_EP_ADDR)
+endif
+
+else
+
+# 如果没有配置，使用默认地址
+ifeq ($(CONFIG_FIX_UIMG_ADDR),)
+CONFIG_UIMG_LOAD_ADDRESS := $(CONFIG_UIMG_ADDR)
+else
+CONFIG_UIMG_LOAD_ADDRESS := $(CONFIG_FIX_UIMG_ADDR)
+endif
+
+ifeq ($(CONFIG_FIX_ROM_BASE_ADDR),)
+CONFIG_UIMG_EP_ADDRESS := $(CONFIG_ROM_BASE_ADDR)
+else
+CONFIG_UIMG_EP_ADDRESS := $(CONFIG_FIX_ROM_BASE_ADDR)
+endif
+
+endif
+
+ifdef CONFIG_FIX_ROM_SIZE
+LDS_CFLAGS = -D__ASSEMBLY__  -DCONFIG_FIX_ROM_SIZE=$(CONFIG_FIX_ROM_SIZE)
+else
+LDS_CFLAGS = -D__ASSEMBLY__
+endif
+
+
+MKUIMG_OPTS += -O tsp -T standalone -C none
+MKUIMG_OPTS += -a $(CONFIG_UIMG_LOAD_ADDRESS) -e $(CONFIG_UIMG_EP_ADDRESS) -n $(APP_NAME)
+MKUIMG_OPTS += -d $(BUILD_DIR)$(APP_NAME).bin $(BUILD_DIR)$(APP_NAME).uimg
+
+# 如果开启安全验签，则增加签名
+ifeq ($(CONFIG_GEN_SIGN_EN),y)
+GEN_SVR_ADDR := $(shell echo $(CONFIG_GEN_SIGN_SVR) | sed -e 's/^[\"]*//g' | sed -e 's/[\"]$$//g')
+GEN_KEY_NAME := $(shell echo $(CONFIG_GEN_KEY_NAME) | sed -e 's/^[\"]*//g' | sed -e 's/[\"]$$//g')
+
+TOOL_SIGN := $(os_root)/tools/gen_img
+
+GI_SIGN_OPTS := --inf=$(BUILD_DIR)$(APP_NAME).uimg --outf=$(BUILD_DIR)$(APP_NAME).simg
+GI_SIGN_OPTS += --keyname=$(GEN_KEY_NAME)
+GI_SIGN_OPTS += --svr=$(GEN_SVR_ADDR) --port=$(CONFIG_GEN_SIGN_PORT) --sign=y
+else
+TOOL_SIGN := echo
+GI_SIGN_OPTS := 'none sign'
+endif
+
+ifeq ($(VOT_STRIP_BIN),y)
+CFLAGS += -Os -ffunction-sections -fdata-sections -Wl,--gc-sections
+
+LDFLAGS += -Os -ffunction-sections -fdata-sections -Wl,--gc-sections
+endif
+
+$(OBJ_DIR)/%.o: %.c
+	$(Q) @mkdir -p $(dir $@)
+	$(Q) $(CC) $(CFLAGS) -o $@ $< -c
+
+app: app_clean app_distclean $(MK_OBJS) $(MK_DTB) isp_config.bin
+	$(Q) mkdir -p $(BUILD_DIR)
+	$(Q) rm -f $(BUILD_DIR)$(APP_NAME).lds
+	$(CC) -E  $(LDS_CFLAGS) -include $(TSP_LDS_INCLUDE) -P -C -o $(BUILD_DIR)$(APP_NAME).lds $(LD_SRC_FILE)
+	$(Q) $(CC) $(BUILD_CPU_CFLAGS) -DCONFIG_FIX_ROM_SIZE=0x80000 -o $(BUILD_DIR)$(APP_NAME).elf $(MK_OBJS) $(LDFLAGS)
+	$(Q) $(OBJCOPY) -O binary -R .note -R .comment -S $(BUILD_DIR)$(APP_NAME).elf $(BUILD_DIR)$(APP_NAME).bin
+	$(Q) $(OBJDUMP) -d $(BUILD_DIR)$(APP_NAME).elf > $(BUILD_DIR)$(APP_NAME).asm
+	$(Q) ls -l $(BUILD_DIR)$(APP_NAME).bin
+	$(Q) rm -f $(MK_OBJS)
+	$(Q) $(MKUIMG_EXE) $(MKUIMG_OPTS)
+	$(Q) $(TOOL_SIGN) $(GI_SIGN_OPTS)
+
+app_clean:
+	$(Q) rm -f $(MK_OBJS)
+	echo $(APP_FILES)
+
+app_distclean:
+	$(Q) rm -f $(EXEC_NAME)
+#	$(Q) if [ -f $(MK_DTB_OBJ) ]; then \
+#		rm -rf $(MK_DTB_OBJ); \
+#	fi
+
+
+isp_config.bin: 
+#	$(Q) $(OBJCOPY) -I binary -O elf32-littleriscv -B riscv --rename-section .data=.ispcfg  $(SDK_ROOT_DIR)/isp_config.bin  $(SDK_ROOT_DIR)/isp_config.o
+	$(Q) $(OBJCOPY) -I binary -O elf32-littleriscv -B riscv --rename-section .data=.ispcfg  $(binf) $(binf).o
+	$(Q) $(AR) r $(SDK_ROOT_DIR)/tdk_release/lib/isp_config.bin.a $(binf).o
+	$(Q) rm -rf $(binf).o
+
+app_dtb: $(TARGET_DTS)
+	$(Q) mkdir -p $(MK_DTB_DIR)
+	$(Q) $(CC) -E -Wp,-MD,$(MK_DTB_DIR)board.pre.tmp $(MK_DTB_CFLAGS) -o $(MK_DTB_DIR)board.dtb.tmp $(TARGET_DTS)
+	$(Q) $(TOOL_DTC) $(MK_DTC_FLAGS) -I dts -O dtb -o $(MK_DTB_DIR)board.dtb $(MK_DTB_DIR)board.dtb.tmp
+	$(Q) $(OBJCOPY) -I binary -O elf32-littleriscv -B riscv $(MK_DTB_DIR)board.dtb $(MK_DTB_DIR)board.dtb.o
+	$(Q) $(AR) r $(MK_DTB_DIR)board.dtb.a $(MK_DTB_DIR)board.dtb.o

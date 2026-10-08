@@ -1,0 +1,1 @@
+CCMD=-Wall -Wstrict-prototypes -Wno-format-security -fno-builtin -ffreestanding -O2 -fno-strict-aliasing -ffunction-sections -fdata-sections -nostdlib -nostdinc -isystem /opt/toolchain/bin/../lib/gcc/riscv64-unknown-elf/10.4.0/include -fno-pic -march=rv32imacxtheade -mabi=ilp32  -I. -Iinclude/ -I/mnt/hgfs/work/git_clone/develop_dv220/ucc3_a_gen/tdk_release/include

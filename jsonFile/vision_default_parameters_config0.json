@@ -1,0 +1,63 @@
+{
+   	"version": "1.0.0",
+	"device_type": "VISION_UAD3",//设备类型VISION_UAD3、VISION_UAD3_384、VISION_UAD3_LITE
+	"manufacturer": "光智科技",
+	"description": "红外热成像机芯的默认参数配置",
+    "UserMenuDefaultParameters": { //用户菜单默认参数配置
+        "Bright": 32, //亮度，数据类型U8
+        "Contrast": 8,//对比度，数据类型U8
+        "SFilter": 8,//锐化，数据类型U8
+        "enhance_level": 4,//增强等级，数据类型U8
+        "Palette": 0,//伪彩色，数据类型U8
+        "Mirror": 0,//镜像，数据类型U8
+        "ShutterMode": 0,//快门打档模式，0-4分别为：关闭OFF、TIMER、TEMPERATURE、PRE、BUTT，数据类型U8
+        "Enlarge": 10,//电子放大，数据类型U8
+        "EE_Level": 0,//图像增强，EE模块，也可以较锐化，数据类型U8
+        "DDE_Level": 0,//动态范围压缩，DDE模块，数据类型U8
+        "AutoShutter": 1,//自动打档时间设置，数据类型U8
+        "IsEnableEnligh": 0,//是否使用英文，数据类型U8
+        "m_dev_env_mode": 2//设备所处环境模式，数据类型U8
+    },
+     "SystemMenuDefaultParameters": { //系统菜单默认参数配置
+        "m_video_out_mode": 0,//视频输出模式，0-7分别为：CVBS、UVC、BT656、BT601、MIPI、LIBUSB、LIBUSB_DEBUG、BUTT，数据类型U8
+        "Usermenu_SW": 0,// 用户菜单开关，0-1分别为：关闭、开启，数据类型U8
+        "m_sffc_mode": 2,//SFFC模式，0-4分别为：关闭OFF、自动AUTO、手动MANUAL、PRE、BUTT，数据类型U8
+        "m_sffc_level": 8000,//SFFC等级，范围为0-10000，数值越大表示SFFC效果越明显，数据类型s32
+        "m_osd_show_on_dev": 0,//osd显示在哪个设备上,0:cvbs 1:uvc，数据类型U8
+        "m_ee_enhance_mode": 0,//全局边缘增强模式，OFF，白边增强、黑边增强，0-4分别为：关闭OFF、白WHITE、黑BLACK、灰WHITE_BLACK、BUTT，数据类型U8
+        "m_cvbs_display_mode": 0,//CVBS显示模式，0-2分别为：ENLARGE放大、ORG、BUTT，数据类型U8
+        "BAD_SW": 1,//坏点修复开关，0-1分别为：关闭、开启，数据类型U8
+        "NUC_SW": 1,//NUC开关，0-1分别为：关闭、开启，数据类型U8
+        "m_bpc_cfg": 0,//坏点修复配置，0-5分别为：ON、OFF/OFF_EE_OFF_DDE、ON_EE_OFF_DDE、ON_EE_ON_DDE、OFF_EE_ON_DDE、BUTT。 // BPC_CFG_MODE_ON_EE_OFF_DDE :在bpc配置的基础上，关闭细节增强dde，开启边沿增强EE. 数据类型U8
+        "m_bpc_view": 0,//坏点修复显示，是否显示已经标记的坏点,0-2分别为：OFF、ON、BUTT，数据类型U8
+        "m_local_isp_magic_value": 0,//本地ISP魔术值，用于判定是否使用该isp配置,范围为0-2^32-1，数值越大表示ISP处理效果越明显，数据类型U32
+        "m_bpc_ref_mode": 0,//坏点矫正修复参考模式，0-2分别为：ON_CVBS、ON_UVC、ON_BUTT，数据类型U8
+        "m_st1_m": 1,//ST1时间分，0-10 minutes，数值越大表示ST1时间越长，数据类型U8
+        "m_st1_s": 15,//ST1时间秒数，范围为5-30s，数值越大表示ST1时间越长，数据类型U8
+        "m_det_st": 2,//0-50 ==> 0 - 5°，数据类型U8
+        "SunPT_SW": 1,//阳光保护开关，0-1分别为：关闭、开启，数据类型U8
+        "S_Val": 20,//满足条件的像素个数，数据类型U16
+        "S_Range": 1000,//对应的灰度值 1000 , ad = 16*1000=16000，数据类型U16           
+        "P_Time_U16": 20,//DEFAULT_SUN_PT_TIME_SECS，阳光保护时间，单位为秒，范围为1-60s，数值越大表示阳光保护时间越长，数据类型U16
+        "DetMode": 5,// 探测温度模式，0-5分别为：自动模式AUTO、低模式LOW、正常模式NORMAL、高模式HIGH、关闭模式OFF、BUTT，数据类型U8
+        "NormalTemp.INT_C": 3,//正常温度INT_C，数据类型U8
+        "NormalTemp.INT_T": 45,//正常温度INT_T，数据类型U8
+        "NormalTemp.OOC_Par": 40,//正常温度OOC_Par，数据类型U8
+        "LowTemp.INT_C": 6,//低温INT_C，数据类型U8
+        "LowTemp.INT_T": 34,//低温INT_T，数据类型U8
+        "LowTemp.OOC_Par": 34,//低温OOC_Par，数据类型U8
+        "HighTemp.INT_C": 5,//高温INT_C，数据类型U8
+        "HighTemp.INT_T": 40,//高温INT_T，数据类型U8
+        "HighTemp.OOC_Par": 32,//高温OOC_Par，数据类型U8
+        "offChange.INT_C": 6,//离线温度INT_C，数据类型U8
+        "offChange.INT_T": 50,//离线温度INT_T，数据类型U8
+        "offChange.OOC_Par": 32//离线温度OOC_Par，数据类型U8
+    },
+     "ExtendedParameters": {//扩展参数配置
+        "exposure_time": 1000,//曝光时间，单位为毫秒，数据类型U16
+        "gain": 1,//增益，单位为倍，数据类型U16
+        "frame_rate": 30,//帧率，单位为帧每秒，数据类型U16
+        "resolution": "640x480",//分辨率，格式为宽x高，数据类型:字符串
+        "color_palette": "ironbow"//伪彩色，常见的有ironbow、rainbow、grayscale等，数据类型:字符串
+    }
+}

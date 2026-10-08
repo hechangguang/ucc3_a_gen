@@ -1,0 +1,42 @@
+# 
+# Makefile -- tsp 支持外部模块编译
+# Created by : Top-Silicon Software Team
+# Copyright : (C) 2023 Hangzhou Top-Silicon Microelectronics Co., Ltd. All rights reserved.
+# 
+# This file is the property of Hangzhou Top-Silicon Microelectronics Co., Ltd. and
+# may not be copied or distributed in any isomorphic form without the prior
+# written consent of Hangzhou Top-Silicon Microelectronics Co., Ltd.
+# 
+
+# 当前配置的makefile
+
+WORK_DIR := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+
+sinclude $(CALL_DIR)/Makefile
+sinclude $(CALL_DIR)/Makefile.$(ost)
+sinclude $(WORK_DIR)/Makefile
+
+INCLUDE := -I. -I$(os_root)/include -I$(os_root)/include/rtos -I$(tdk_root)/include -I$(CALL_DIR)/inc
+CFLAGS += $(EXTRA_CFLAG)
+
+ifeq ($(mklib),y)
+MK_NAME := $(CALL_DIR)/$(TARGET_NAME).a
+else
+MK_NAME := $(CALL_DIR)/$(TARGET_NAME).ko
+endif
+
+MK_CALL_FILES := $(patsubst %.c, $(CALL_DIR)/%.c, $(TARGET_FILES_y))
+MK_OBJS := $(patsubst %.c, %.o, $(MK_CALL_FILES))
+
+%.o: %.c
+	$(Q) $(CC) $(CFLAGS) -o $@ $< -c
+
+modules: modules_clean modules_distclean $(MK_OBJS)
+	$(AR) r $(MK_NAME) $(MK_OBJS)
+	$(Q) rm -f $(MK_OBJS)
+
+modules_clean:
+	$(Q) rm -f $(MK_OBJS)
+
+modules_distclean:
+	$(Q) rm -f $(MK_NAME)
